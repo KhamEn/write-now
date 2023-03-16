@@ -1,5 +1,5 @@
 import Editor from "./components/Editor";
-import Prompter from "./components/Prompter";
+import Prompter from "./components/Prompter/Prompter";
 
 function App() {
   return (
