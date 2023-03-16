@@ -2,9 +2,45 @@
 @tailwind components;
 @tailwind utilities;
 
+@font-face {
+  font-family: "Courier Prime";
+  src: url("../../public/fonts/Courier_Prime.ttf");
+}
+@font-face {
+  font-family: "Lilly";
+  src: url("../../public/fonts/Lilly.ttf");
+}
+/* 
+@font-face {
+  src: url("../../public/fonts/Literata-VariableFont_opsz,wght.ttf") format("truetype-variations");
+  font-family: 'Literata';
+  font-weight: 200 900;
+  font-style: normal;
+}
+
+@font-face {
+  src: url("../../public/fonts/Literata-Italic-VariableFont_opsz,wght.ttf") format("truetype-variations");
+  font-family: 'Literata';
+  font-weight: 200 900;
+  font-style: italic;
+}  */
+@font-face {
+  src: url("../../public/fonts/SourceSans3-VariableFont_wght.ttf") format("truetype-variations");
+  font-family: 'Source Sans';
+  font-weight: 200 900;
+  font-style: normal;
+}
+
+@font-face {
+  src: url("../../public/fonts/SourceSans3-Italic-VariableFont_wght.ttf") format("truetype-variations");
+  font-family: 'Source Sans';
+  font-weight: 200 900;
+  font-style: italic;
+} 
+
 .ProseMirror {
     max-width: 8.5in;    
     height: 11in;
     padding: clamp(0.5rem, -0.6364rem + 5.6818vw, 3rem) clamp(1rem, -1.2727rem + 11.3636vw, 6rem);
-    @apply shadow-sm shadow-dark-shade outline-none overflow-auto mx-auto font-mono
+    @apply  outline-none overflow-auto mx-auto font-mono  rounded-sm shadow-xl shadow-base-300 border border-base-300
   }
