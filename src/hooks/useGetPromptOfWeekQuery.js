@@ -1,7 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import getTopPromptFromJSON from "./util/getTopPromptFromJSON";
 
-async function fetchWeeklyTopPost() {
+async function fetchPromptOfTheWeek() {
   const response = await fetch(
     "https://www.reddit.com/r/WritingPrompts/top/.json?t=week"
   );
@@ -12,11 +12,11 @@ async function fetchWeeklyTopPost() {
   }
 
   const posts = await response.json();
-  const topPost = getTopPromptFromJSON(posts);
+  const topPrompt = getTopPromptFromJSON(posts);
 
-  return topPost;
+  return topPrompt;
 }
 
 export default () => {
-  return useQuery(["Get the top post of the month"], fetchWeeklyTopPost);
+  return useQuery(["Get the top post of the month"], fetchPromptOfTheWeek);
 };
