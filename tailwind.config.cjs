@@ -13,7 +13,7 @@ module.exports = {
     },
     extend: {
       fontFamily: {
-        serif: ["Handlee", ...defaultTheme.fontFamily.serif],
+        serif: ["Literata", ...defaultTheme.fontFamily.mono],
         mono: ["Courier Prime", ...defaultTheme.fontFamily.mono],
         sans: ["Source Sans", ...defaultTheme.fontFamily.sans],
       },

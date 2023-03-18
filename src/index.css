@@ -4,35 +4,31 @@
 
 @font-face {
   font-family: "Courier Prime";
-  src: url("../../public/fonts/Courier_Prime.ttf");
+  src: url("../../fonts/Courier_Prime.ttf");
 }
+
 @font-face {
-  font-family: "Lilly";
-  src: url("../../public/fonts/Lilly.ttf");
-}
-/* 
-@font-face {
-  src: url("../../public/fonts/Literata-VariableFont_opsz,wght.ttf") format("truetype-variations");
+  src: url("../../fonts/LiterataTT_var.ttf") format("truetype-variations");
   font-family: 'Literata';
   font-weight: 200 900;
   font-style: normal;
 }
 
 @font-face {
-  src: url("../../public/fonts/Literata-Italic-VariableFont_opsz,wght.ttf") format("truetype-variations");
+  src: url("../../fonts/LiterataTT_var-Italic.ttf") format("truetype-variations");
   font-family: 'Literata';
   font-weight: 200 900;
   font-style: italic;
-}  */
+} 
 @font-face {
-  src: url("../../public/fonts/SourceSans3-VariableFont_wght.ttf") format("truetype-variations");
+  src: url("../../fonts/SourceSans3-VariableFont_wght.ttf") format("truetype-variations");
   font-family: 'Source Sans';
   font-weight: 200 900;
   font-style: normal;
 }
 
 @font-face {
-  src: url("../../public/fonts/SourceSans3-Italic-VariableFont_wght.ttf") format("truetype-variations");
+  src: url("../../fonts/SourceSans3-Italic-VariableFont_wght.ttf") format("truetype-variations");
   font-family: 'Source Sans';
   font-weight: 200 900;
   font-style: italic;
