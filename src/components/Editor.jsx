@@ -3,10 +3,21 @@ import Document from "@tiptap/extension-document";
 import Paragraph from "@tiptap/extension-paragraph";
 import Text from "@tiptap/extension-text";
 import CharacterCount from "@tiptap/extension-character-count";
+import Italic from "@tiptap/extension-italic";
+import Bold from "@tiptap/extension-bold";
+import Strike from "@tiptap/extension-strike";
 
 export default () => {
   const editor = useEditor({
-    extensions: [Document, Paragraph, Text, CharacterCount],
+    extensions: [
+      Document,
+      Paragraph,
+      Text,
+      Italic,
+      Bold,
+      Strike,
+      CharacterCount,
+    ],
     // intial content
     content: "",
     // content: localStorage.getItem("WriteNow")
