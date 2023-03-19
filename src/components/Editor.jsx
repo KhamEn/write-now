@@ -19,16 +19,21 @@ export default () => {
       CharacterCount,
     ],
     // intial content
-    content: "",
-    // content: localStorage.getItem("WriteNow")
-    //   ? localStorage.getItem("WriteNow")
-    //   : "Apparently there's not",
+    // content: "",
+    content: localStorage.getItem("WriteNow")
+      ? localStorage.getItem("WriteNow")
+      : "Apparently there's not",
     // triggered on every change
-    // onUpdate: ({ editor }) => {
-    //   const json = editor.getJSON();
-    //   // send the content to an API here
-    //   localStorage.setItem("WriteNow", editor.view.dom.innerText);
-    // },
+    onUpdate: ({ editor }) => {
+      const json = editor.getJSON();
+      // send the content to an API here
+      localStorage.setItem("WriteNow", editor.view.dom.innerText);
+    },
+    editorProps: {
+      attributes: {
+        spellcheck: "false",
+      },
+    },
   });
 
   return <EditorContent editor={editor} />;
