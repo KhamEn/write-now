@@ -1,7 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
-import getTopPromptFromJSON from "./util/getTopPromptFromJSON";
 
-async function fetchPromptOfTheDay() {
+async function fetchPostsFromToday() {
   const response = await fetch(
     "https://www.reddit.com/r/WritingPrompts/top/.json"
   );
@@ -11,12 +10,9 @@ async function fetchPromptOfTheDay() {
     throw new Error(message);
   }
 
-  const posts = await response.json();
-  const topPrompt = getTopPromptFromJSON(posts);
-
-  return topPrompt;
+  return await response.json();
 }
 
 export default () => {
-  return useQuery(["Get the top post of the day"], fetchPromptOfTheDay);
+  return useQuery(["Get top posts from today"], fetchPostsFromToday);
 };

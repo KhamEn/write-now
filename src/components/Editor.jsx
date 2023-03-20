@@ -9,6 +9,16 @@ import Strike from "@tiptap/extension-strike";
 
 export default () => {
   const editor = useEditor({
+    content: sessionStorage.getItem("WriteNow")
+      ? sessionStorage.getItem("WriteNow")
+      : "",
+
+    editorProps: {
+      attributes: {
+        spellcheck: "false",
+      },
+    },
+
     extensions: [
       Document,
       Paragraph,
@@ -18,21 +28,10 @@ export default () => {
       Strike,
       CharacterCount,
     ],
-    // intial content
-    // content: "",
-    content: localStorage.getItem("WriteNow")
-      ? localStorage.getItem("WriteNow")
-      : "Apparently there's not",
-    // triggered on every change
+
     onUpdate: ({ editor }) => {
       const json = editor.getJSON();
-      // send the content to an API here
-      localStorage.setItem("WriteNow", editor.view.dom.innerText);
-    },
-    editorProps: {
-      attributes: {
-        spellcheck: "false",
-      },
+      sessionStorage.setItem("WriteNow", editor.view.dom.innerText);
     },
   });
 
