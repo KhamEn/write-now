@@ -1,6 +1,6 @@
 export default ({ prompt, redditThreadUrl }) => {
   return (
-    <div className="rounded-lg border border-neutral-lighter p-4 shadow-plane-bl shadow-neutral-lighter">
+    <div className="rounded-lg border border-light-shade p-4 shadow-plane-bl shadow-light-shade">
       <div>
         <p className="">{prompt}</p>
       </div>
@@ -9,7 +9,7 @@ export default ({ prompt, redditThreadUrl }) => {
         <a
           href={redditThreadUrl}
           target="_blank"
-          className="rounded-full border px-2 text-sm text-secondary-base hover:underline"
+          className="rounded-full border px-2 text-sm text-blue-base hover:underline"
         >
           reddit thread
         </a>

@@ -124,7 +124,7 @@ function App() {
     <div className="p-2">
       <button
         onClick={changePrompt}
-        className="mb-16 rounded-2xl border-2 px-3 py-1 text-primary-base shadow-block-b hover:bg-primary-lightest hover:underline"
+        className="mb-16 rounded-2xl border-2 px-3 py-1 text-red-base shadow-block-b hover:bg-red-tint"
       >
         Get New Prompt
       </button>
