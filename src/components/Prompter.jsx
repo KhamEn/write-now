@@ -79,7 +79,6 @@ export default () => {
   }
 
   return (
-    // <div className="card bg-base-200 shadow-lg shadow-base-300">
     <div>
       <button
         onClick={changePrompt}
@@ -87,16 +86,16 @@ export default () => {
       >
         Get New Prompt
       </button>
-      <div className="rounded-lg border border-accent-base p-4 shadow-plane-bl shadow-accent-base">
+      <div className="rounded-lg border border-neutral-lighter p-4 shadow-plane-bl shadow-neutral-lighter">
         <div>
           <p className="">{prompt}</p>
         </div>
 
-        <div className="mt-4 text-sm">
+        <div className="mt-4">
           <a
             href={sourceUrl}
             target="_blank"
-            className="rounded-full border px-2 text-secondary-base hover:underline"
+            className="rounded-full border px-2 text-sm text-secondary-base hover:underline"
           >
             reddit thread
           </a>

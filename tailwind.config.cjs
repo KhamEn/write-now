@@ -33,9 +33,9 @@ module.exports = {
         darkest: "#25203b",
       },
       neutral: {
-        lightest: "#ececed",
-        lighter: "#c5c6c9",
-        light: "#3e414a",
+        lightest: "#ebebeb",
+        lighter: "#adaeb2",
+        light: "#73757c",
         base: "#3e414a",
         dark: "#32343b",
         darker: "#32343b",
@@ -48,9 +48,8 @@ module.exports = {
         "plane-bl": "-9px 9px 0px",
       },
       fontFamily: {
-        serif: ["Literata", ...defaultTheme.fontFamily.mono],
         mono: ["Courier Prime", ...defaultTheme.fontFamily.mono],
-        sans: ["Source Sans", ...defaultTheme.fontFamily.sans],
+        sans: ["IBM Plex Sans", ...defaultTheme.fontFamily.sans],
       },
       fontSize: {
         "fluid-base": "clamp(1.00rem, calc(0.89rem + 0.57vw), 1.25rem)",

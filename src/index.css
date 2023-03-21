@@ -8,35 +8,36 @@
 }
 
 @font-face {
-  src: url("../../fonts/LiterataTT_var.ttf") format("truetype-variations");
-  font-family: 'Literata';
-  font-weight: 200 900;
+  font-family: "IBM Plex Sans";
+  src: url("../../fonts/IBMPlexSans-Regular.woff2");
+  font-weight: 400;
   font-style: normal;
 }
 
 @font-face {
-  src: url("../../fonts/LiterataTT_var-Italic.ttf") format("truetype-variations");
-  font-family: 'Literata';
-  font-weight: 200 900;
+  font-family: "IBM Plex Sans";
+  src: url("../../fonts/IBMPlexSans-Italic.woff2");
+  font-weight: 400;
   font-style: italic;
-} 
+}
+
 @font-face {
-  src: url("../../fonts/SourceSans3-VariableFont_wght.ttf") format("truetype-variations");
-  font-family: 'Source Sans';
-  font-weight: 200 900;
+  font-family: "IBM Plex Sans";
+  src: url("../../fonts/IBMPlexSans-Bold.woff2");
+  font-weight: 700;
   font-style: normal;
 }
 
 @font-face {
-  src: url("../../fonts/SourceSans3-Italic-VariableFont_wght.ttf") format("truetype-variations");
-  font-family: 'Source Sans';
-  font-weight: 200 900;
+  font-family: "IBM Plex Sans";
+  src: url("../../fonts/IBMPlexSans-BoldItalic.woff2");
+  font-weight: 700;
   font-style: italic;
-} 
+}
 
 .ProseMirror {
     max-width: 8.5in;    
     height: 11in;
     padding: clamp(0.5rem, -0.6364rem + 5.6818vw, 3rem) clamp(1rem, -1.2727rem + 11.3636vw, 6rem);
-    @apply rounded-lg  outline-none overflow-auto mx-auto font-mono border shadow-accent-base  border-accent-base
+    @apply rounded-lg  outline-none overflow-auto mx-auto font-mono border shadow-accent-base  border-neutral-lighter
 }
