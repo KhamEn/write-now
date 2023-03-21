@@ -7,7 +7,9 @@ function App() {
       <div className="mx-auto my-8 max-w-[8.5in]">
         <Prompter />
       </div>
-      <Editor />
+      <div className="mb-8">
+        <Editor />
+      </div>
     </div>
   );
 }

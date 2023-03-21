@@ -30,7 +30,9 @@ export default () => {
   const { data: yearPrompts } = useGetPostsFromThisYearQuery();
   const { data: allPrompts } = useGetPostsFromAllTimeQuery();
 
-  const [prompt, setPrompt] = useState("");
+  const [prompt, setPrompt] = useState(
+    "He wants to build a web app, but someone keeps messsing with his internet."
+  );
   const [sourceUrl, setSourceUrl] = useState("");
 
   useEffect(() => {
@@ -77,14 +79,25 @@ export default () => {
   }
 
   return (
-    <div className="card bg-base-200 shadow-lg shadow-base-300">
-      <div className="card-body">
-        <p className="prose-xl prose font-serif">{prompt}</p>
-        <div className="card-actions justify-end">
-          <button onClick={changePrompt} className="btn-secondary btn">
-            New Prompt
-          </button>
-          <a href={sourceUrl} target="_blank" className="badge">
+    // <div className="card bg-base-200 shadow-lg shadow-base-300">
+    <div>
+      <button
+        onClick={changePrompt}
+        className="mb-16 rounded-2xl border-2 px-3 py-1 text-primary-base shadow-block-b hover:bg-primary-lightest hover:underline"
+      >
+        Get New Prompt
+      </button>
+      <div className="rounded-lg border border-accent-base p-4 shadow-plane-bl shadow-accent-base">
+        <div>
+          <p className="">{prompt}</p>
+        </div>
+
+        <div className="mt-4 text-sm">
+          <a
+            href={sourceUrl}
+            target="_blank"
+            className="rounded-full border px-2 text-secondary-base hover:underline"
+          >
             reddit thread
           </a>
         </div>

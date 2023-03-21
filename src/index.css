@@ -38,5 +38,5 @@
     max-width: 8.5in;    
     height: 11in;
     padding: clamp(0.5rem, -0.6364rem + 5.6818vw, 3rem) clamp(1rem, -1.2727rem + 11.3636vw, 6rem);
-    @apply  outline-none overflow-auto mx-auto font-mono  rounded-sm shadow-xl shadow-base-300 border border-base-300
-  }
+    @apply rounded-lg  outline-none overflow-auto mx-auto font-mono border shadow-accent-base  border-accent-base
+}
