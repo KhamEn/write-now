@@ -33,8 +33,8 @@ module.exports = {
         darkest: "#25203b",
       },
       neutral: {
-        lightest: "#ebebeb",
-        lighter: "#adaeb2",
+        lightest: "#ececed",
+        lighter: "#c5c6c9",
         light: "#73757c",
         base: "#3e414a",
         dark: "#32343b",

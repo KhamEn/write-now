@@ -2,7 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 
 async function fetchPostsFromAllTime() {
   const response = await fetch(
-    "https://www.reddit.com/r/WritingPrompts/top/.json?t=all&limit=250"
+    "https://www.reddit.com/r/WritingPrompts/top/.json?t=all&limit=100"
   );
 
   if (!response.ok) {

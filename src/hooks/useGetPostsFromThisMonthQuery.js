@@ -2,7 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 
 async function fetchPostsFromThisMonth() {
   const response = await fetch(
-    "https://www.reddit.com/r/WritingPrompts/top/.json?t=month&limit=70"
+    "https://www.reddit.com/r/WritingPrompts/top/.json?t=month&limit=60"
   );
 
   if (!response.ok) {
