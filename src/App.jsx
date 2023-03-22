@@ -10,6 +10,8 @@ import Bold from "@tiptap/extension-bold";
 import Strike from "@tiptap/extension-strike";
 import Prompter from "./components/Prompter";
 
+import { HTMLarkdown } from "htmlarkdown";
+
 import useGetPostsFromTodayQuery from "./hooks/useGetPostsFromTodayQuery";
 import useGetPostsFromThisWeekQuery from "./hooks/useGetPostsFromThisWeekQuery";
 import useGetPostsFromThisMonthQuery from "./hooks/useGetPostsFromThisMonthQuery";
@@ -39,7 +41,7 @@ function getRandomInt(max) {
   return Math.floor(Math.random() * max);
 }
 
-function App() {
+export default () => {
   const editor = useEditor({
     editorProps: {
       attributes: {
@@ -120,22 +122,43 @@ function App() {
     editor.commands.clearContent();
   }
 
+  function copyEditorContentAsMarkdown() {
+    const htmlarkdown = new HTMLarkdown();
+    const contentInHtml = editor.getHTML();
+    console.log(contentInHtml);
+    const contentInMd = htmlarkdown.convert(contentInHtml);
+    cpmte;
+    navigator.clipboard.writeText(contentInMd);
+  }
+
   return (
-    <div className="p-2">
-      <button
-        onClick={changePrompt}
-        className="mb-16 rounded-2xl border-2 px-3 py-1 text-red-base shadow-block-b hover:bg-red-tint"
-      >
-        Get New Prompt
-      </button>
-      <div className="mx-auto my-8 max-w-[8.5in]">
-        <Prompter prompt={prompt} redditThreadUrl={sourceUrl} />
+    <div className="mx-auto my-16 flex max-w-screen-2xl justify-evenly gap-4">
+      <div className="flex flex-col gap-4">
+        <button
+          onClick={changePrompt}
+          className="rounded-2xl border-2 px-3 py-1 text-red-base shadow-block-b hover:bg-red-tint"
+        >
+          Get New Prompt
+        </button>
+        <button
+          onClick={() => copyEditorContentAsMarkdown()}
+          className="rounded-2xl border-2 px-3 py-1 text-dark-base shadow-block-b hover:bg-dark-tint"
+        >
+          Copy Text
+        </button>
       </div>
-      <div className="mb-8">
-        <EditorContent editor={editor} />
+      <div>
+        <div className="mx-auto max-w-[8.5in]">
+          <Prompter prompt={prompt} redditThreadUrl={sourceUrl} />
+        </div>
+        <div className="my-8">
+          <EditorContent editor={editor} />
+        </div>
+      </div>
+      <div>
+        <div>Timer Here</div>
+        <div>Word Counter Here</div>
       </div>
     </div>
   );
-}
-
-export default App;
+};
