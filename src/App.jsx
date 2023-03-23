@@ -82,7 +82,7 @@ export default () => {
 
   /*
   The maximum posts that you can fetch, through reddit json api, is 100.
-  And some posts might not be writing prompts, so postNumber should be a few numbers below 100.
+  And of thoses 100, some posts might not be writing prompts, so postNumber should be a few numbers below 100.
   */
 
   function changePrompt() {
@@ -122,13 +122,21 @@ export default () => {
     editor.commands.clearContent();
   }
 
-  function copyEditorContentAsMarkdown() {
+  function copyUserWritingInMarkdown() {
     const htmlarkdown = new HTMLarkdown();
     const contentInHtml = editor.getHTML();
-    console.log(contentInHtml);
     const contentInMd = htmlarkdown.convert(contentInHtml);
-    cpmte;
     navigator.clipboard.writeText(contentInMd);
+  }
+
+  function downloadUserWriting(anchorElement) {
+    const htmlarkdown = new HTMLarkdown();
+    const contentInHtml = editor.getHTML();
+    const contentInMd = htmlarkdown.convert(contentInHtml);
+    const blob = new Blob([contentInMd], { type: "text/markdown" });
+    const blobUrl = window.URL.createObjectURL(blob);
+    anchorElement.setAttribute("href", blobUrl);
+    anchorElement.setAttribute("download", "wrote-it.md");
   }
 
   return (
@@ -141,11 +149,17 @@ export default () => {
           Get New Prompt
         </button>
         <button
-          onClick={() => copyEditorContentAsMarkdown()}
+          onClick={() => copyUserWritingInMarkdown()}
           className="rounded-2xl border-2 px-3 py-1 text-dark-base shadow-block-b hover:bg-dark-tint"
         >
-          Copy Text
+          Copy Response
         </button>
+        <a
+          onClick={(event) => downloadUserWriting(event.target)}
+          className="rounded-2xl border-2 px-3 py-1 text-dark-base shadow-block-b hover:bg-dark-tint"
+        >
+          Download Response
+        </a>
       </div>
       <div>
         <div className="mx-auto max-w-[8.5in]">
