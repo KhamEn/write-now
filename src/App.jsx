@@ -12,6 +12,8 @@ import Prompter from "./components/Prompter";
 
 import { HTMLarkdown } from "htmlarkdown";
 
+import * as Switch from "@radix-ui/react-switch";
+
 import useGetPostsFromTodayQuery from "./hooks/useGetPostsFromTodayQuery";
 import useGetPostsFromThisWeekQuery from "./hooks/useGetPostsFromThisWeekQuery";
 import useGetPostsFromThisMonthQuery from "./hooks/useGetPostsFromThisMonthQuery";
@@ -72,6 +74,7 @@ export default () => {
   const [prompt, setPrompt] = useState(
     "He wants to build a web app, but someone keeps messsing with his internet."
   );
+  const [promptIsEnabled, setPromptIsEnabled] = useState(true);
   const [sourceUrl, setSourceUrl] = useState("");
 
   useEffect(() => {
@@ -164,16 +167,30 @@ export default () => {
         </a>
       </div>
       <div>
-        <div className="mx-auto max-w-[8.5in]">
-          <Prompter prompt={prompt} redditThreadUrl={sourceUrl} />
-        </div>
-        <div className="my-8">
+        {promptIsEnabled && (
+          <div className="mx-auto mb-8 max-w-[8.5in]">
+            <Prompter prompt={prompt} redditThreadUrl={sourceUrl} />
+          </div>
+        )}
+
+        <div className="mb-8 w-[8.5in]">
           <EditorContent editor={editor} />
         </div>
       </div>
-      <div>
-        <div>Timer Here</div>
-        <div>Word Counter Here</div>
+      <div className="">
+        <label className="flex gap-1" htmlFor="prompt-toggle">
+          <span className="text-sm font-semibold">Prompt</span>
+          <Switch.Root
+            id="prompt-toggle"
+            className="daisy-toggle-success daisy-toggle"
+            defaultChecked
+            onCheckedChange={(checked) => {
+              setPromptIsEnabled(checked);
+            }}
+          >
+            <Switch.Thumb className="" />
+          </Switch.Root>
+        </label>
       </div>
     </div>
   );

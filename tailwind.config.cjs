@@ -50,5 +50,23 @@ module.exports = {
       },
     },
   },
-  plugins: [],
+
+  plugins: [require("daisyui")],
+  daisyui: {
+    styled: true,
+    themes: [
+      {
+        light: {
+          ...require("daisyui/src/colors/themes")["[data-theme=light]"],
+          success: "#003a70",
+        },
+      },
+    ],
+    base: false,
+    utils: false,
+    logs: true,
+    rtl: false,
+    prefix: "daisy-",
+    darkTheme: "dark",
+  },
 };
