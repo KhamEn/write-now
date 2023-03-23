@@ -17,6 +17,7 @@ import useGetPostsFromThisWeekQuery from "./hooks/useGetPostsFromThisWeekQuery";
 import useGetPostsFromThisMonthQuery from "./hooks/useGetPostsFromThisMonthQuery";
 import useGetPostsFromThisYearQuery from "./hooks/useGetPostsFromThisYearQuery";
 import useGetPostsFromAllTimeQuery from "./hooks/useGetPostsFromAllTimeQuery";
+import History from "@tiptap/extension-history";
 
 /*
 first post -> postNumber === 1
@@ -57,6 +58,7 @@ export default () => {
       Bold,
       Strike,
       CharacterCount,
+      History,
     ],
   });
 
