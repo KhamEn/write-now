@@ -5,23 +5,26 @@ module.exports = {
   content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
   theme: {
     colors: {
-      red: {
-        tint: "#fababa",
-        base: "#af0000",
-        shade: "#790000",
-      },
       blue: {
-        tint: "#edebf7",
-        base: "#4e3e9f",
-        shade: "#383061",
+        accent: "#ffff48",
+        tint: "#7e93ff",
+        tint: "#7e93ff",
+        base: "#022cff",
+        shade: "#00157e",
       },
       light: {
-        base: "#ececed",
-        shade: "#86868d",
+        shade: "#cccccf",
+        base: "#fAf9f6",
+        "large-AA": "#909097",
+        "normal-AA": "#717178",
+        "normal-AAA": "#4e4e53",
       },
       dark: {
-        tint: "#616167",
+        tint: "#46464a",
         base: "#111112",
+        "large-AA": "#606065",
+        "normal-AA": "#7c7c83",
+        "normal-AAA": "#9f9fa4",
       },
     },
     extend: {

@@ -144,19 +144,19 @@ export default () => {
       <div className="flex flex-col gap-4">
         <button
           onClick={changePrompt}
-          className="rounded-2xl border-2 px-3 py-1 text-red-base shadow-block-b hover:bg-red-tint"
+          className="rounded-2xl border-2 px-3 py-1 text-blue-base shadow-block-b hover:bg-blue-accent"
         >
           Get New Prompt
         </button>
         <button
           onClick={() => copyUserWritingInMarkdown()}
-          className="rounded-2xl border-2 px-3 py-1 text-dark-base shadow-block-b hover:bg-dark-tint"
+          className="rounded-2xl border-2 px-3 py-1 text-dark-base shadow-block-b hover:bg-dark-normal-AAA"
         >
           Copy Response
         </button>
         <a
           onClick={(event) => downloadUserWriting(event.target)}
-          className="rounded-2xl border-2 px-3 py-1 text-dark-base shadow-block-b hover:bg-dark-tint"
+          className="rounded-2xl border-2 px-3 py-1 text-dark-base shadow-block-b hover:bg-dark-normal-AAA"
         >
           Download Response
         </a>
