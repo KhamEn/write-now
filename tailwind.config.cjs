@@ -5,12 +5,13 @@ module.exports = {
   content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
   theme: {
     colors: {
+      red: {
+        base: "#700200",
+        "normal-AAA": "#ffafae",
+      },
       blue: {
-        accent: "#ffff48",
-        tint: "#7e93ff",
-        tint: "#7e93ff",
-        base: "#022cff",
-        shade: "#00157e",
+        base: "#003a70",
+        "normal-AAA": "#9ed0ff",
       },
       light: {
         shade: "#cccccf",

@@ -1,6 +1,6 @@
 export default ({ prompt, redditThreadUrl }) => {
   return (
-    <div className="rounded-lg border border-light-shade p-4 shadow-plane-bl shadow-light-shade">
+    <div className="border border-dark-tint p-4 shadow-plane-bl shadow-dark-tint">
       <div>
         <p className="">{prompt}</p>
       </div>
