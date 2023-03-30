@@ -111,10 +111,10 @@ export default () => {
   return (
     <Popover.Root modal={true}>
       <Popover.Anchor>
-        <article className="rounded-md border py-3 px-6">
+        <article className="rounded-md border py-3 px-6 text-dark-tint shadow-md shadow-dark-tint">
           <Popover.Trigger asChild>
             <section
-              className="daisy-radial-progress mb-2 text-xl font-bold hover:cursor-pointer"
+              className="daisy-radial-progress mb-2 text-xl font-bold  hover:cursor-pointer"
               style={{
                 "--value": `${percentageLeft}`,
                 "--size": "8rem",

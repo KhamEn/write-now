@@ -5,6 +5,7 @@ import Document from "@tiptap/extension-document";
 import Paragraph from "@tiptap/extension-paragraph";
 import Text from "@tiptap/extension-text";
 import CharacterCount from "@tiptap/extension-character-count";
+import History from "@tiptap/extension-history";
 import Italic from "@tiptap/extension-italic";
 import Bold from "@tiptap/extension-bold";
 import Strike from "@tiptap/extension-strike";
@@ -19,8 +20,9 @@ import useGetPostsFromThisWeekQuery from "./hooks/useGetPostsFromThisWeekQuery";
 import useGetPostsFromThisMonthQuery from "./hooks/useGetPostsFromThisMonthQuery";
 import useGetPostsFromThisYearQuery from "./hooks/useGetPostsFromThisYearQuery";
 import useGetPostsFromAllTimeQuery from "./hooks/useGetPostsFromAllTimeQuery";
-import History from "@tiptap/extension-history";
+
 import Timer from "./components/Timer";
+import Toolbar from "./components/Toolbar";
 
 /*
 first post -> postNumber === 1
@@ -146,56 +148,43 @@ export default () => {
   }
 
   return (
-    <div className="mx-auto my-16 max-w-screen-2xl justify-evenly gap-4">
-      <div className="flex gap-4">
-        <button
-          onClick={changePrompt}
-          className="rounded-2xl border-2 px-3 py-1 text-red-base shadow-block-b hover:bg-red-normal-AAA"
-        >
-          Get New Prompt
-        </button>
-        <button
-          onClick={() => copyUserWritingInMarkdown()}
-          className="rounded-2xl border-2 px-3 py-1 text-dark-base shadow-block-b hover:bg-dark-normal-AAA"
-        >
-          Copy Response
-        </button>
-        <a
-          onClick={(event) => downloadUserWriting(event.target)}
-          className="rounded-2xl border-2 px-3 py-1 text-dark-base shadow-block-b hover:bg-dark-normal-AAA"
-        >
-          Download Response
-        </a>
-      </div>
-      <div className="mt-4 flex gap-4">
-        <main>
-          {promptIsEnabled && (
-            <div className="mx-auto mb-8 max-w-[8.5in]">
-              <Prompter prompt={prompt} redditThreadUrl={sourceUrl} />
-            </div>
-          )}
-
-          <div className="mb-8 w-[8.5in]">
-            <EditorContent editor={editor} />
+    <div className="mx-auto my-12 flex max-w-screen-2xl justify-between gap-8">
+      <aside className="writing writing-vertical-lr flex flex-col gap-4">
+        <Toolbar
+          handleNewPromptClick={changePrompt}
+          handleCopyClick={copyUserWritingInMarkdown}
+          handleExportClick={downloadUserWriting}
+        />
+      </aside>
+      <main>
+        {promptIsEnabled && (
+          <div className="mx-auto mb-8 max-w-[8.5in]">
+            <Prompter prompt={prompt} redditThreadUrl={sourceUrl} />
           </div>
-        </main>
-        <aside className="flex flex-col gap-4">
-          <label className="flex gap-1" htmlFor="prompt-toggle">
-            <span className="text-sm font-semibold">Prompt</span>
-            <Switch.Root
-              id="prompt-toggle"
-              className="daisy-toggle-success daisy-toggle"
-              defaultChecked
-              onCheckedChange={(checked) => {
-                setPromptIsEnabled(checked);
-              }}
-            >
-              <Switch.Thumb className="" />
-            </Switch.Root>
-          </label>
+        )}
+
+        <div className="mb-8 rounded-lg shadow-md shadow-dark-tint">
+          <EditorContent editor={editor} />
+        </div>
+      </main>
+      <aside className="flex flex-col gap-4">
+        {/* <label className="flex w-fit gap-1" htmlFor="prompt-toggle">
+              <span className="text-sm font-semibold">Prompt</span>
+              <Switch.Root
+                id="prompt-toggle"
+                className="daisy-toggle-success daisy-toggle"
+                defaultChecked
+                onCheckedChange={(checked) => {
+                  setPromptIsEnabled(checked);
+                }}
+              >
+                <Switch.Thumb className="" />
+              </Switch.Root>
+            </label> */}
+        <div className="w-fit">
           <Timer />
-        </aside>
-      </div>
+        </div>
+      </aside>
     </div>
   );
 };
