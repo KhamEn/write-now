@@ -6,7 +6,7 @@ module.exports = {
   theme: {
     colors: {
       red: {
-        base: "#700200",
+        base: "#  ",
         "normal-AAA": "#ffafae",
       },
       blue: {
@@ -63,7 +63,7 @@ module.exports = {
       },
     ],
     base: false,
-    utils: false,
+    utils: true,
     logs: true,
     rtl: false,
     prefix: "daisy-",

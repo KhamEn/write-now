@@ -20,6 +20,7 @@ import useGetPostsFromThisMonthQuery from "./hooks/useGetPostsFromThisMonthQuery
 import useGetPostsFromThisYearQuery from "./hooks/useGetPostsFromThisYearQuery";
 import useGetPostsFromAllTimeQuery from "./hooks/useGetPostsFromAllTimeQuery";
 import History from "@tiptap/extension-history";
+import Timer from "./components/Timer";
 
 /*
 first post -> postNumber === 1
@@ -145,8 +146,8 @@ export default () => {
   }
 
   return (
-    <div className="mx-auto my-16 flex max-w-screen-2xl justify-evenly gap-4">
-      <div className="flex flex-col gap-4">
+    <div className="mx-auto my-16 max-w-screen-2xl justify-evenly gap-4">
+      <div className="flex gap-4">
         <button
           onClick={changePrompt}
           className="rounded-2xl border-2 px-3 py-1 text-red-base shadow-block-b hover:bg-red-normal-AAA"
@@ -166,31 +167,34 @@ export default () => {
           Download Response
         </a>
       </div>
-      <div>
-        {promptIsEnabled && (
-          <div className="mx-auto mb-8 max-w-[8.5in]">
-            <Prompter prompt={prompt} redditThreadUrl={sourceUrl} />
-          </div>
-        )}
+      <div className="mt-4 flex gap-4">
+        <main>
+          {promptIsEnabled && (
+            <div className="mx-auto mb-8 max-w-[8.5in]">
+              <Prompter prompt={prompt} redditThreadUrl={sourceUrl} />
+            </div>
+          )}
 
-        <div className="mb-8 w-[8.5in]">
-          <EditorContent editor={editor} />
-        </div>
-      </div>
-      <div className="">
-        <label className="flex gap-1" htmlFor="prompt-toggle">
-          <span className="text-sm font-semibold">Prompt</span>
-          <Switch.Root
-            id="prompt-toggle"
-            className="daisy-toggle-success daisy-toggle"
-            defaultChecked
-            onCheckedChange={(checked) => {
-              setPromptIsEnabled(checked);
-            }}
-          >
-            <Switch.Thumb className="" />
-          </Switch.Root>
-        </label>
+          <div className="mb-8 w-[8.5in]">
+            <EditorContent editor={editor} />
+          </div>
+        </main>
+        <aside className="flex flex-col gap-4">
+          <label className="flex gap-1" htmlFor="prompt-toggle">
+            <span className="text-sm font-semibold">Prompt</span>
+            <Switch.Root
+              id="prompt-toggle"
+              className="daisy-toggle-success daisy-toggle"
+              defaultChecked
+              onCheckedChange={(checked) => {
+                setPromptIsEnabled(checked);
+              }}
+            >
+              <Switch.Thumb className="" />
+            </Switch.Root>
+          </label>
+          <Timer />
+        </aside>
       </div>
     </div>
   );
