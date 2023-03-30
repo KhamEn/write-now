@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 
 import { EditorContent, useEditor } from "@tiptap/react";
 import Document from "@tiptap/extension-document";
@@ -74,11 +74,11 @@ export default () => {
   const { data: yearPrompts } = useGetPostsFromThisYearQuery();
   const { data: allPrompts } = useGetPostsFromAllTimeQuery();
 
-  const [prompt, setPrompt] = useState("");
+  const [prompt, setPrompt] = useState(
+    "He wants to build a web app, but someone keeps messsing with his internet."
+  );
   const [promptIsEnabled, setPromptIsEnabled] = useState(true);
   const [sourceUrl, setSourceUrl] = useState("");
-
-  const [showOverlay, setShowOverlay] = useState(false);
 
   useEffect(() => {
     if (haveFetchedTodayPrompts) {
@@ -149,14 +149,6 @@ export default () => {
 
   return (
     <div className="mx-auto my-12 flex max-w-screen-2xl justify-between gap-8">
-      {showOverlay && (
-        <div
-          id="whole-screen-overlay"
-          className=" fixed top-0 left-0 right-0 bottom-0 z-10 h-full w-full bg-light-shade/[0.90]"
-          onMouseMove={() => setShowOverlay(false)}
-        ></div>
-      )}
-
       <aside className="writing writing-vertical-lr flex flex-col gap-4">
         <Toolbar
           handleNewPromptClick={changePrompt}
@@ -164,24 +156,15 @@ export default () => {
           handleExportClick={downloadUserWriting}
         />
       </aside>
-      <main className="z-20" onMouseLeave={() => setShowOverlay(false)}>
+      <main>
         {promptIsEnabled && (
-          <div className="mx-auto mb-8 max-w-[8.5in] bg-light-shade">
+          <div className="mx-auto mb-8 max-w-[8.5in]">
             <Prompter prompt={prompt} redditThreadUrl={sourceUrl} />
           </div>
         )}
 
         <div className="mb-8 rounded-lg shadow-md shadow-dark-tint">
-          <EditorContent
-            onFocus={() => setShowOverlay(true)}
-            onBlur={() => setShowOverlay(false)}
-            onMouseEnter={(event) => {
-              if (document.activeElement === event.currentTarget.firstChild)
-                setShowOverlay(true);
-            }}
-            onKeyDown={() => setShowOverlay(true)}
-            editor={editor}
-          />
+          <EditorContent editor={editor} />
         </div>
       </main>
       <aside className="flex flex-col gap-4">

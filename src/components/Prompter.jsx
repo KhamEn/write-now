@@ -9,7 +9,7 @@ export default ({ prompt, redditThreadUrl }) => {
         <a
           href={redditThreadUrl}
           target="_blank"
-          className="rounded-full border px-2 text-sm text-blue-shade hover:underline"
+          className="text-blue-shade rounded-full border px-2 text-sm underline"
         >
           reddit thread
         </a>
