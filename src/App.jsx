@@ -48,6 +48,7 @@ function getRandomInt(max) {
 }
 
 export default () => {
+  // Editor
   const editor = useEditor({
     editorProps: {
       attributes: {
@@ -67,6 +68,7 @@ export default () => {
     ],
   });
 
+  // Prompts
   const { data: todayPrompts, isSuccess: haveFetchedTodayPrompts } =
     useGetPostsFromTodayQuery();
   const { data: weekPrompts } = useGetPostsFromThisWeekQuery();
@@ -78,8 +80,6 @@ export default () => {
   const [promptIsEnabled, setPromptIsEnabled] = useState(true);
   const [sourceUrl, setSourceUrl] = useState("");
 
-  const [showOverlay, setShowOverlay] = useState(false);
-
   useEffect(() => {
     if (haveFetchedTodayPrompts) {
       const topPostOfTheDay = getPostFromRedditPosts(todayPrompts, 1);
@@ -87,12 +87,17 @@ export default () => {
       setSourceUrl(topPostOfTheDay.url);
     }
   }, [haveFetchedTodayPrompts]);
+  // Misc States
+  const [showOverlay, setShowOverlay] = useState(false);
+
+  // Timer States
+  const [hasBegunWriting, setHasBegunWriting] = useState(false);
+  const [isNewPage, setIsNewPage] = useState(false);
 
   /*
   The maximum posts that you can fetch, through reddit json api, is 100.
   And of thoses 100, some posts might not be writing prompts, so postNumber should be a few numbers below 100.
   */
-
   function changePrompt() {
     const isFromToday = Math.random() > 0.4;
 
@@ -128,6 +133,7 @@ export default () => {
     }
 
     editor.commands.clearContent();
+    setIsNewPage(true);
   }
 
   function copyUserWritingInMarkdown() {
@@ -145,6 +151,16 @@ export default () => {
     const blobUrl = window.URL.createObjectURL(blob);
     anchorElement.setAttribute("href", blobUrl);
     anchorElement.setAttribute("download", "wrote-it.md");
+  }
+
+  function handleEditorKeyDown() {
+    setShowOverlay(true);
+
+    setShowOverlay(true);
+    if (!hasBegunWriting) {
+      setHasBegunWriting(true);
+      setIsNewPage(false);
+    }
   }
 
   return (
@@ -179,7 +195,7 @@ export default () => {
               if (document.activeElement === event.currentTarget.firstChild)
                 setShowOverlay(true);
             }}
-            onKeyDown={() => setShowOverlay(true)}
+            onKeyDown={handleEditorKeyDown}
             editor={editor}
           />
         </div>
@@ -199,7 +215,11 @@ export default () => {
               </Switch.Root>
             </label> */}
         <div className="w-fit">
-          <Timer />
+          <Timer
+            hasBegunWriting={hasBegunWriting}
+            setHasBegunWriting={setHasBegunWriting}
+            isNewPage={isNewPage}
+          />
         </div>
       </aside>
     </div>

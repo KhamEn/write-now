@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 import { EditorContent, useEditor } from "@tiptap/react";
 import Document from "@tiptap/extension-document";
@@ -48,6 +48,7 @@ function getRandomInt(max) {
 }
 
 export default () => {
+  // Editor
   const editor = useEditor({
     editorProps: {
       attributes: {
@@ -67,6 +68,7 @@ export default () => {
     ],
   });
 
+  // Prompts
   const { data: todayPrompts, isSuccess: haveFetchedTodayPrompts } =
     useGetPostsFromTodayQuery();
   const { data: weekPrompts } = useGetPostsFromThisWeekQuery();
@@ -74,9 +76,7 @@ export default () => {
   const { data: yearPrompts } = useGetPostsFromThisYearQuery();
   const { data: allPrompts } = useGetPostsFromAllTimeQuery();
 
-  const [prompt, setPrompt] = useState(
-    "He wants to build a web app, but someone keeps messsing with his internet."
-  );
+  const [prompt, setPrompt] = useState("");
   const [promptIsEnabled, setPromptIsEnabled] = useState(true);
   const [sourceUrl, setSourceUrl] = useState("");
 
@@ -87,6 +87,8 @@ export default () => {
       setSourceUrl(topPostOfTheDay.url);
     }
   }, [haveFetchedTodayPrompts]);
+  // Misc States
+  const [showOverlay, setShowOverlay] = useState(false);
 
   /*
   The maximum posts that you can fetch, through reddit json api, is 100.
@@ -147,8 +149,20 @@ export default () => {
     anchorElement.setAttribute("download", "wrote-it.md");
   }
 
+  function handleEditorKeyDown() {
+    console.log("has begun writing: " + hasBegunWriting);
+  }
+
   return (
     <div className="mx-auto my-12 flex max-w-screen-2xl justify-between gap-8">
+      {showOverlay && (
+        <div
+          id="whole-screen-overlay"
+          className=" fixed top-0 left-0 right-0 bottom-0 z-10 h-full w-full bg-light-shade/[0.90]"
+          onMouseMove={() => setShowOverlay(false)}
+        ></div>
+      )}
+
       <aside className="writing writing-vertical-lr flex flex-col gap-4">
         <Toolbar
           handleNewPromptClick={changePrompt}
@@ -156,15 +170,24 @@ export default () => {
           handleExportClick={downloadUserWriting}
         />
       </aside>
-      <main>
+      <main className="z-20" onMouseLeave={() => setShowOverlay(false)}>
         {promptIsEnabled && (
-          <div className="mx-auto mb-8 max-w-[8.5in]">
+          <div className="mx-auto mb-8 max-w-[8.5in] bg-light-shade">
             <Prompter prompt={prompt} redditThreadUrl={sourceUrl} />
           </div>
         )}
 
         <div className="mb-8 rounded-lg shadow-md shadow-dark-tint">
-          <EditorContent editor={editor} />
+          <EditorContent
+            onFocus={() => setShowOverlay(true)}
+            onBlur={() => setShowOverlay(false)}
+            onMouseEnter={(event) => {
+              if (document.activeElement === event.currentTarget.firstChild)
+                setShowOverlay(true);
+            }}
+            onKeyDown={handleEditorKeyDown}
+            editor={editor}
+          />
         </div>
       </main>
       <aside className="flex flex-col gap-4">

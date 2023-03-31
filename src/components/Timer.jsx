@@ -41,7 +41,7 @@ const DEFAULT_MILLISECONDS =
 const MILLISECONDS_CONVERSION_BUFFER = 100;
 const FULL_PERCENTAGE_LEFT = 99;
 
-export default () => {
+export default ({ hasBegunWriting, setHasBegunWriting, isNewPage }) => {
   // Countdown Timer states begin
   const [targetTimeInMilli, setTargetTimeInMilli] =
     useState(DEFAULT_MILLISECONDS);
@@ -77,6 +77,18 @@ export default () => {
   const [numberInputHours, setNumberInputHours] = useState(DEFAULT_HOURS);
   const [numberInputMinutes, setNumberInputMinutes] = useState(DEFAULT_MINUTES);
   const [numberInputSeconds, setNumberInputSeconds] = useState(DEFAULT_SECONDS);
+
+  useEffect(() => {
+    if (hasBegunWriting) {
+      timer.start();
+    }
+  }, [hasBegunWriting]);
+  useEffect(() => {
+    if (isNewPage) {
+      resetTimer();
+    }
+  }, [isNewPage]);
+
   // Edit Timer states end
 
   // Countdown Timer functions begin
@@ -88,12 +100,16 @@ export default () => {
     }
   }
 
+  function pauseTimer() {
+    timer.pause();
+    setHasBegunWriting(false);
+  }
+
   function resetTimer() {
-    {
-      timer.stop();
-      setTimeLeftPercentage(99);
-      setRemainingTime(targetTimeInMilli + MILLISECONDS_CONVERSION_BUFFER);
-    }
+    timer.stop();
+    setTimeLeftPercentage(99);
+    setRemainingTime(targetTimeInMilli + MILLISECONDS_CONVERSION_BUFFER);
+    setHasBegunWriting(false);
   }
   // Countdown Timer functions end
 
@@ -138,7 +154,7 @@ export default () => {
                 />
               </button>
             ) : (
-              <button onClick={() => timer.pause()}>
+              <button onClick={pauseTimer}>
                 <Pause
                   className="rounded-full border p-1"
                   weight="fill"
@@ -147,7 +163,7 @@ export default () => {
               </button>
             )}
 
-            <button onClick={() => resetTimer()}>
+            <button onClick={resetTimer}>
               <ArrowCounterClockwise
                 className="rounded-full border p-1"
                 weight="fill"
