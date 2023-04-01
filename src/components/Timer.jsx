@@ -83,6 +83,7 @@ export default ({ hasBegunWriting, setHasBegunWriting, isNewPage }) => {
       timer.start();
     }
   }, [hasBegunWriting]);
+
   useEffect(() => {
     if (isNewPage) {
       resetTimer();
@@ -141,35 +142,45 @@ export default ({ hasBegunWriting, setHasBegunWriting, isNewPage }) => {
             </section>
           </Popover.Trigger>
           <section className="flex justify-center gap-2">
-            {timer.isStopped() || timer.isPaused() ? (
-              <button
-                onClick={() => {
-                  startTimer();
-                }}
-              >
-                <Play
-                  className="rounded-full border p-1"
-                  weight="fill"
-                  size={32}
-                />
-              </button>
+            {timer.isRunning() ? (
+              <>
+                <button onClick={pauseTimer}>
+                  <Pause
+                    className="rounded-full border p-1"
+                    weight="fill"
+                    size={32}
+                  />
+                </button>
+                <button onClick={resetTimer}>
+                  <ArrowCounterClockwise
+                    className="rounded-full border p-1"
+                    weight="fill"
+                    size={32}
+                  />
+                </button>
+              </>
             ) : (
-              <button onClick={pauseTimer}>
-                <Pause
-                  className="rounded-full border p-1"
-                  weight="fill"
-                  size={32}
-                />
-              </button>
+              <>
+                <button
+                  onClick={pauseTimer}
+                  disabled
+                  className=" text-light-large-AA hover:cursor-default"
+                >
+                  <Pause
+                    className="rounded-full border p-1"
+                    weight="fill"
+                    size={32}
+                  />
+                </button>
+                <button onClick={resetTimer}>
+                  <ArrowCounterClockwise
+                    className="rounded-full border p-1"
+                    weight="fill"
+                    size={32}
+                  />
+                </button>
+              </>
             )}
-
-            <button onClick={resetTimer}>
-              <ArrowCounterClockwise
-                className="rounded-full border p-1"
-                weight="fill"
-                size={32}
-              />
-            </button>
           </section>
         </article>
       </Popover.Anchor>
