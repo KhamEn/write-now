@@ -2,7 +2,6 @@ import * as Popover from "@radix-ui/react-popover";
 import { useState, useCallback, useEffect } from "react";
 import { useTimer } from "react-use-precision-timer";
 import {
-  Play,
   Pause,
   ArrowCounterClockwise,
   FloppyDisk,
@@ -73,16 +72,43 @@ export default ({ hasBegunWriting, setHasBegunWriting, isNewPage }) => {
   );
   // Countdown Timer states end
 
+  // Toast states begin
+  const [zIndex, setZIndex] = useState("");
+
+  // const [toastOpen, setToastOpen] = useState(false);
+  // const [toastMessage, setToastMessage] = useState("");
+  // Toast states end
+
   // Edit Timer states begin
   const [numberInputHours, setNumberInputHours] = useState(DEFAULT_HOURS);
   const [numberInputMinutes, setNumberInputMinutes] = useState(DEFAULT_MINUTES);
   const [numberInputSeconds, setNumberInputSeconds] = useState(DEFAULT_SECONDS);
+  // Edit Timer states end
 
+  // Countdown Timer functions begin
   useEffect(() => {
     if (hasBegunWriting) {
       timer.start();
+      // Put the timer above the overlay.
+      setZIndex("z-30");
+      const delayer = setTimeout(() => {
+        // Put the timer under the overlay.
+        setZIndex("");
+      }, 4000);
+      return () => clearTimeout(delayer);
     }
   }, [hasBegunWriting]);
+
+  useEffect(() => {
+    if (timer.isStopped()) {
+      setZIndex("z-30");
+      const delayer = setTimeout(() => {
+        // Put the timer under the overlay.
+        setZIndex("");
+      }, 4000);
+      return () => clearTimeout(delayer);
+    }
+  }, [timer.isStopped()]);
 
   useEffect(() => {
     if (isNewPage) {
@@ -90,9 +116,6 @@ export default ({ hasBegunWriting, setHasBegunWriting, isNewPage }) => {
     }
   }, [isNewPage]);
 
-  // Edit Timer states end
-
-  // Countdown Timer functions begin
   function startTimer() {
     if (timer.isPaused()) {
       timer.resume();
@@ -126,113 +149,123 @@ export default ({ hasBegunWriting, setHasBegunWriting, isNewPage }) => {
   // Edit Timer functions end
 
   return (
-    <Popover.Root modal={true}>
-      <Popover.Anchor>
-        <article className="rounded-md border py-3 px-6 text-dark-tint shadow-md shadow-dark-tint">
-          <Popover.Trigger asChild>
-            <section
-              className="daisy-radial-progress mb-2 text-xl font-bold  hover:cursor-pointer"
-              style={{
-                "--value": `${percentageLeft}`,
-                "--size": "8rem",
-                "--thickness": "0.5rem",
-              }}
-            >
-              {printTimeInHumanReadableFormat(remainingTime)}
-            </section>
-          </Popover.Trigger>
-          <section className="flex justify-center gap-2">
-            {timer.isRunning() ? (
-              <>
-                <button onClick={pauseTimer}>
-                  <Pause
-                    className="rounded-full border p-1"
-                    weight="fill"
-                    size={32}
-                  />
-                </button>
-                <button onClick={resetTimer}>
-                  <ArrowCounterClockwise
-                    className="rounded-full border p-1"
-                    weight="fill"
-                    size={32}
-                  />
-                </button>
-              </>
-            ) : (
-              <>
-                <button
-                  onClick={pauseTimer}
-                  disabled
-                  className=" text-light-large-AA hover:cursor-default"
-                >
-                  <Pause
-                    className="rounded-full border p-1"
-                    weight="fill"
-                    size={32}
-                  />
-                </button>
-                <button onClick={resetTimer}>
-                  <ArrowCounterClockwise
-                    className="rounded-full border p-1"
-                    weight="fill"
-                    size={32}
-                  />
-                </button>
-              </>
-            )}
-          </section>
-        </article>
-      </Popover.Anchor>
-
-      <Popover.Portal>
-        <Popover.Content
-          collisionPadding={10}
-          className="rounded-md bg-light-shade shadow-md shadow-dark-base"
-        >
-          <fieldset className="flex">
-            <NumberInput
-              value={numberInputHours}
-              max={99}
-              min={0}
-              setValue={setNumberInputHours}
-              handleChange={setNumberInputHours}
-            />
-            <NumberInput
-              value={numberInputMinutes}
-              max={59}
-              min={0}
-              setValue={setNumberInputMinutes}
-              handleChange={setNumberInputMinutes}
-            />
-            <NumberInput
-              value={numberInputSeconds}
-              max={59}
-              min={0}
-              setValue={setNumberInputSeconds}
-              handleSecondsChange={setNumberInputSeconds}
-            />
-          </fieldset>
-          <div className="flex justify-center gap-4 p-4">
-            <Popover.Close asChild>
-              <button
-                onClick={handleSaveClick}
-                className="flex grow justify-center gap-1 rounded-md border border-dark-base bg-dark-base py-1 px-3 text-light-shade"
+    <article>
+      <Popover.Root modal={true}>
+        <Popover.Anchor>
+          {/* <article className="relative z-30 rounded-md border py-3 px-6 text-dark-tint shadow-md shadow-dark-tint"> */}
+          <article
+            className={`relative ${zIndex} rounded-md border py-3 px-6 text-dark-tint shadow-md shadow-dark-tint`}
+          >
+            <Popover.Trigger asChild>
+              <section
+                className="daisy-radial-progress mb-2 text-xl font-bold  hover:cursor-pointer"
+                style={{
+                  "--value": `${percentageLeft}`,
+                  "--size": "8rem",
+                  "--thickness": "0.5rem",
+                }}
               >
-                <FloppyDisk size={24} />
-                <span>Save</span>
-              </button>
-            </Popover.Close>
-            <Popover.Close asChild>
-              <button className="flex grow justify-center gap-1 rounded-md border py-1 px-3">
-                <X size={24} />
-                <span>Cancel</span>
-              </button>
-            </Popover.Close>
-          </div>
-          <Popover.Arrow width={20} height={10} />
-        </Popover.Content>
-      </Popover.Portal>
-    </Popover.Root>
+                {printTimeInHumanReadableFormat(remainingTime)}
+              </section>
+            </Popover.Trigger>
+            <section className="flex justify-center gap-2">
+              {timer.isRunning() ? (
+                <>
+                  <button onClick={pauseTimer}>
+                    <Pause
+                      className="rounded-full border p-1"
+                      weight="fill"
+                      size={32}
+                    />
+                  </button>
+                  <button onClick={resetTimer}>
+                    <ArrowCounterClockwise
+                      className="rounded-full border p-1"
+                      weight="fill"
+                      size={32}
+                    />
+                  </button>
+                </>
+              ) : (
+                <>
+                  <button
+                    onClick={pauseTimer}
+                    disabled
+                    className=" text-light-large-AA hover:cursor-default"
+                  >
+                    <Pause
+                      className="rounded-full border p-1"
+                      weight="fill"
+                      size={32}
+                    />
+                  </button>
+                  <button onClick={resetTimer}>
+                    <ArrowCounterClockwise
+                      className="rounded-full border p-1"
+                      weight="fill"
+                      size={32}
+                    />
+                  </button>
+                </>
+              )}
+            </section>
+          </article>
+        </Popover.Anchor>
+
+        <Popover.Portal>
+          <Popover.Content
+            collisionPadding={10}
+            className="relative z-50 rounded-md bg-light-shade shadow-md shadow-dark-base"
+          >
+            <fieldset className="flex">
+              <NumberInput
+                value={numberInputHours}
+                max={99}
+                min={0}
+                setValue={setNumberInputHours}
+                handleChange={setNumberInputHours}
+              />
+              <NumberInput
+                value={numberInputMinutes}
+                max={59}
+                min={0}
+                setValue={setNumberInputMinutes}
+                handleChange={setNumberInputMinutes}
+              />
+              <NumberInput
+                value={numberInputSeconds}
+                max={59}
+                min={0}
+                setValue={setNumberInputSeconds}
+                handleSecondsChange={setNumberInputSeconds}
+              />
+            </fieldset>
+            <div className="flex justify-center gap-4 p-4">
+              <Popover.Close asChild>
+                <button
+                  onClick={handleSaveClick}
+                  className="flex grow justify-center gap-1 rounded-md border border-dark-base bg-dark-base py-1 px-3 text-light-shade"
+                >
+                  <FloppyDisk size={24} />
+                  <span>Save</span>
+                </button>
+              </Popover.Close>
+              <Popover.Close asChild>
+                <button className="flex grow justify-center gap-1 rounded-md border py-1 px-3">
+                  <X size={24} />
+                  <span>Cancel</span>
+                </button>
+              </Popover.Close>
+            </div>
+            <Popover.Arrow width={20} height={10} />
+          </Popover.Content>
+        </Popover.Portal>
+      </Popover.Root>
+      {/* <TimerToast
+        open={toastOpen}
+        setOpen={setToastOpen}
+        message={toastMessage}
+      /> */}
+    </article>
   );
 };
