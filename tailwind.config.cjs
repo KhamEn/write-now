@@ -6,7 +6,7 @@ module.exports = {
   theme: {
     colors: {
       red: {
-        base: "#  ",
+        base: "#7a0000",
         "normal-AAA": "#ffafae",
       },
       blue: {
@@ -49,6 +49,14 @@ module.exports = {
         "letter-fluid-horizontal-padding":
           "clamp(1rem, -1.2727rem + 11.3636vw, 6rem)",
       },
+    },
+  },
+  variants: {
+    extend: {
+      ringWidth: ["focus-visible"],
+      ringColor: ["focus-visible"],
+      ringOffsetWidth: ["focus-visible"],
+      ringOffsetColor: ["focus-visible"],
     },
   },
 

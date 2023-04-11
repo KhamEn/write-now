@@ -184,7 +184,7 @@ export default () => {
         setTimerIsEnabled={setTimerIsEnabled}
         setWordCounterIsEnabled={setWordCounterIsEnabled}
       />
-      <div className="mx-auto my-16 flex justify-center gap-16">
+      <div className="mx-auto my-16 flex justify-center gap-16 ">
         <main
           className="z-20 mx-auto flex max-w-[8.5in] flex-col gap-8"
           onMouseLeave={() => setShowOverlay(false)}

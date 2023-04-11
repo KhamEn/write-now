@@ -11,7 +11,7 @@ export default ({
       <div className="flex gap-4">
         <button
           onClick={handleNewPromptClick}
-          className="rounded-2xl border-2 px-3 py-1 text-red-base shadow-block-b hover:bg-red-normal-AAA "
+          className="rounded-2xl border-2 px-3 py-1 text-blue-base shadow-block-b hover:bg-blue-normal-AAA "
         >
           Get New Prompt
         </button>

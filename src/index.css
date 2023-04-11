@@ -39,7 +39,13 @@
     max-width: 8.5in;    
     height: 11in;
     padding: clamp(0.5rem, -0.6364rem + 5.6818vw, 3rem) clamp(1rem, -1.2727rem + 11.3636vw, 6rem);
-    @apply outline-none overflow-auto mx-auto font-mono border border-light-shade bg-light-base text-dark-base rounded-lg
+    @apply outline-none overflow-auto mx-auto font-mono border border-light-shade bg-light-base text-dark-base rounded-lg focus:ring-0 focus-visible:ring-offset-0 caret-blue-base
+}
+
+@layer base {
+  *:focus-visible {
+    @apply ring-2 ring-blue-base ring-offset-4 ring-offset-light-shade outline-none
+  }
 }
 
 @layer utilities {
