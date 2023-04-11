@@ -81,6 +81,9 @@ export default () => {
   const [promptIsEnabled, setPromptIsEnabled] = useState(true);
   const [sourceUrl, setSourceUrl] = useState("");
 
+  const [timerIsEnabled, setTimerIsEnabled] = useState(true);
+  const [wordCounterIsEnabled, setWordCounterIsEnabled] = useState(true);
+
   useEffect(() => {
     if (haveFetchedTodayPrompts) {
       const topPostOfTheDay = getPostFromRedditPosts(todayPrompts, 1);
@@ -203,16 +206,46 @@ export default () => {
       </main>
       <aside className="flex flex-col gap-4">
         <div className="w-fit">
-          <Timer
-            hasBegunWriting={hasBegunWriting}
-            setHasBegunWriting={setHasBegunWriting}
-            isNewPage={isNewPage}
-          />
+          <label className="flex w-fit gap-1" htmlFor="timer-toggle">
+            <span className="text-sm font-semibold">Timer</span>
+            <Switch.Root
+              id="timer-toggle"
+              className="daisy-toggle-success daisy-toggle"
+              defaultChecked
+              onCheckedChange={(checked) => {
+                setTimerIsEnabled(checked);
+              }}
+            >
+              <Switch.Thumb className="" />
+            </Switch.Root>
+          </label>
+          {timerIsEnabled && (
+            <Timer
+              hasBegunWriting={hasBegunWriting}
+              setHasBegunWriting={setHasBegunWriting}
+              isNewPage={isNewPage}
+            />
+          )}
         </div>
-        <div>
-          <WordCounter
-            wordCount={editor ? editor.storage.characterCount.words() : 0}
-          />
+        <div className="w-fit">
+          <label className="flex w-fit gap-1" htmlFor="word-counter-toggle">
+            <span className="text-sm font-semibold">Word Counter</span>
+            <Switch.Root
+              id="word-counter-toggle"
+              className="daisy-toggle-success daisy-toggle"
+              defaultChecked
+              onCheckedChange={(checked) => {
+                setWordCounterIsEnabled(checked);
+              }}
+            >
+              <Switch.Thumb className="" />
+            </Switch.Root>
+          </label>
+          {wordCounterIsEnabled && (
+            <WordCounter
+              wordCount={editor ? editor.storage.characterCount.words() : 0}
+            />
+          )}
         </div>
       </aside>
     </div>
