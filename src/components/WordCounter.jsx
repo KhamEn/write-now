@@ -15,7 +15,6 @@ export default ({ wordCount }) => {
     DEFAULT_TARGET_WORD_COUNT
   );
 
-  console.log(targetWordCountFromInput);
   useEffect(() => {
     if (wordCount > 0 && wordCount < 4) {
       setZIndex("z-30");

@@ -13,8 +13,6 @@ import Prompter from "./components/Prompter";
 
 import { HTMLarkdown } from "htmlarkdown";
 
-import * as Switch from "@radix-ui/react-switch";
-
 import useGetPostsFromTodayQuery from "./hooks/useGetPostsFromTodayQuery";
 import useGetPostsFromThisWeekQuery from "./hooks/useGetPostsFromThisWeekQuery";
 import useGetPostsFromThisMonthQuery from "./hooks/useGetPostsFromThisMonthQuery";
@@ -82,7 +80,7 @@ export default () => {
   const [sourceUrl, setSourceUrl] = useState("");
 
   const [timerIsEnabled, setTimerIsEnabled] = useState(true);
-  const [wordCounterIsEnabled, setWordCounterIsEnabled] = useState(true);
+  const [wordCounterIsEnabled, setWordCounterIsEnabled] = useState(false);
 
   useEffect(() => {
     if (haveFetchedTodayPrompts) {
@@ -140,12 +138,12 @@ export default () => {
     setIsNewPage(true);
   }
 
-  function copyUserWritingInMarkdown() {
-    const htmlarkdown = new HTMLarkdown();
-    const contentInHtml = editor.getHTML();
-    const contentInMd = htmlarkdown.convert(contentInHtml);
-    navigator.clipboard.writeText(contentInMd);
-  }
+  // function copyUserWritingInMarkdown() {
+  //   const htmlarkdown = new HTMLarkdown();
+  //   const contentInHtml = editor.getHTML();
+  //   const contentInMd = htmlarkdown.convert(contentInHtml);
+  //   navigator.clipboard.writeText(contentInMd);
+  // }
 
   function downloadUserWriting(anchorElement) {
     const htmlarkdown = new HTMLarkdown();
@@ -168,7 +166,7 @@ export default () => {
   }
 
   return (
-    <div className="mx-auto my-12 flex max-w-screen-2xl justify-between gap-8">
+    <div className="mx-auto max-w-screen-xl px-4">
       {showOverlay && (
         <div
           id="whole-screen-overlay"
@@ -176,78 +174,55 @@ export default () => {
           onMouseMove={() => setShowOverlay(false)}
         ></div>
       )}
+      <Toolbar
+        handleNewPromptClick={changePrompt}
+        handleExportClick={downloadUserWriting}
+        setTimerIsEnabled={setTimerIsEnabled}
+        setWordCounterIsEnabled={setWordCounterIsEnabled}
+      />
+      <div className="mx-auto my-16 flex justify-center gap-16">
+        <main
+          className="z-20 mx-auto flex max-w-[8.5in] flex-col gap-8"
+          onMouseLeave={() => setShowOverlay(false)}
+        >
+          {promptIsEnabled && (
+            <div className=" bg-light-shade">
+              <Prompter prompt={prompt} redditThreadUrl={sourceUrl} />
+            </div>
+          )}
 
-      <aside className="writing writing-vertical-lr flex flex-col gap-4">
-        <Toolbar
-          handleNewPromptClick={changePrompt}
-          handleCopyClick={copyUserWritingInMarkdown}
-          handleExportClick={downloadUserWriting}
-        />
-      </aside>
-      <main className="z-20" onMouseLeave={() => setShowOverlay(false)}>
-        {promptIsEnabled && (
-          <div className="mx-auto mb-8 max-w-[8.5in] bg-light-shade">
-            <Prompter prompt={prompt} redditThreadUrl={sourceUrl} />
+          <div className="rounded-lg shadow-md shadow-dark-tint">
+            <EditorContent
+              onFocus={() => setShowOverlay(true)}
+              onBlur={() => setShowOverlay(false)}
+              onMouseEnter={(event) => {
+                if (document.activeElement === event.currentTarget.firstChild)
+                  setShowOverlay(true);
+              }}
+              onKeyDown={handleEditorKeyDown}
+              editor={editor}
+            />
           </div>
-        )}
-
-        <div className="mb-8 rounded-lg shadow-md shadow-dark-tint">
-          <EditorContent
-            onFocus={() => setShowOverlay(true)}
-            onBlur={() => setShowOverlay(false)}
-            onMouseEnter={(event) => {
-              if (document.activeElement === event.currentTarget.firstChild)
-                setShowOverlay(true);
-            }}
-            onKeyDown={handleEditorKeyDown}
-            editor={editor}
-          />
-        </div>
-      </main>
-      <aside className="flex flex-col gap-4">
-        <div className="w-fit">
-          <label className="flex w-fit gap-1" htmlFor="timer-toggle">
-            <span className="text-sm font-semibold">Timer</span>
-            <Switch.Root
-              id="timer-toggle"
-              className="daisy-toggle-success daisy-toggle"
-              defaultChecked
-              onCheckedChange={(checked) => {
-                setTimerIsEnabled(checked);
-              }}
-            >
-              <Switch.Thumb className="" />
-            </Switch.Root>
-          </label>
-          {timerIsEnabled && (
-            <Timer
-              hasBegunWriting={hasBegunWriting}
-              setHasBegunWriting={setHasBegunWriting}
-              isNewPage={isNewPage}
-            />
-          )}
-        </div>
-        <div className="w-fit">
-          <label className="flex w-fit gap-1" htmlFor="word-counter-toggle">
-            <span className="text-sm font-semibold">Word Counter</span>
-            <Switch.Root
-              id="word-counter-toggle"
-              className="daisy-toggle-success daisy-toggle"
-              defaultChecked
-              onCheckedChange={(checked) => {
-                setWordCounterIsEnabled(checked);
-              }}
-            >
-              <Switch.Thumb className="" />
-            </Switch.Root>
-          </label>
-          {wordCounterIsEnabled && (
-            <WordCounter
-              wordCount={editor ? editor.storage.characterCount.words() : 0}
-            />
-          )}
-        </div>
-      </aside>
+        </main>
+        <aside>
+          <div>
+            {timerIsEnabled && (
+              <Timer
+                hasBegunWriting={hasBegunWriting}
+                setHasBegunWriting={setHasBegunWriting}
+                isNewPage={isNewPage}
+              />
+            )}
+          </div>
+          <div className="w-full">
+            {wordCounterIsEnabled && (
+              <WordCounter
+                wordCount={editor ? editor.storage.characterCount.words() : 0}
+              />
+            )}
+          </div>
+        </aside>
+      </div>
     </div>
   );
 };
