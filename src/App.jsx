@@ -96,6 +96,10 @@ export default () => {
   const [hasBegunWriting, setHasBegunWriting] = useState(false);
   const [isNewPage, setIsNewPage] = useState(false);
 
+  const mainRef = useRef(null);
+  const scrollCallback = () => {
+    mainRef.current.scrollIntoView({ behavior: "smooth", block: "center" });
+  };
   /*
   The maximum posts that you can fetch, through reddit json api, is 100.
   And of thoses 100, some posts might not be writing prompts, so postNumber should be a few numbers below 100.
@@ -184,6 +188,8 @@ export default () => {
         <main
           className="z-20 mx-auto flex max-w-[8.5in] flex-col gap-8"
           onMouseLeave={() => setShowOverlay(false)}
+          ref={mainRef}
+          onFocus={scrollCallback}
         >
           {promptIsEnabled && (
             <div className=" bg-light-shade">
