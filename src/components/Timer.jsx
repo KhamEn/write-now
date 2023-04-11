@@ -33,7 +33,7 @@ function printTimeInHumanReadableFormat(milliseconds) {
 }
 
 const DEFAULT_HOURS = 0;
-const DEFAULT_MINUTES = 5;
+const DEFAULT_MINUTES = 10;
 const DEFAULT_SECONDS = 0;
 const DEFAULT_MILLISECONDS =
   DEFAULT_HOURS * 3600000 + DEFAULT_MINUTES * 60000 + DEFAULT_SECONDS * 1000;
@@ -72,12 +72,7 @@ export default ({ hasBegunWriting, setHasBegunWriting, isNewPage }) => {
   );
   // Countdown Timer states end
 
-  // Toast states begin
   const [zIndex, setZIndex] = useState("");
-
-  // const [toastOpen, setToastOpen] = useState(false);
-  // const [toastMessage, setToastMessage] = useState("");
-  // Toast states end
 
   // Edit Timer states begin
   const [numberInputHours, setNumberInputHours] = useState(DEFAULT_HOURS);
@@ -149,10 +144,9 @@ export default ({ hasBegunWriting, setHasBegunWriting, isNewPage }) => {
   // Edit Timer functions end
 
   return (
-    <article>
+    <>
       <Popover.Root modal={true}>
         <Popover.Anchor>
-          {/* <article className="relative z-30 rounded-md border py-3 px-6 text-dark-tint shadow-md shadow-dark-tint"> */}
           <article
             className={`relative ${zIndex} rounded-md border py-3 px-6 text-dark-tint shadow-md shadow-dark-tint`}
           >
@@ -223,21 +217,21 @@ export default ({ hasBegunWriting, setHasBegunWriting, isNewPage }) => {
                 max={99}
                 min={0}
                 setValue={setNumberInputHours}
-                handleChange={setNumberInputHours}
+                // handleChange={setNumberInputHours}
               />
               <NumberInput
                 value={numberInputMinutes}
                 max={59}
                 min={0}
                 setValue={setNumberInputMinutes}
-                handleChange={setNumberInputMinutes}
+                // handleChange={setNumberInputMinutes}
               />
               <NumberInput
                 value={numberInputSeconds}
                 max={59}
                 min={0}
                 setValue={setNumberInputSeconds}
-                handleSecondsChange={setNumberInputSeconds}
+                // handleSecondsChange={setNumberInputSeconds}
               />
             </fieldset>
             <div className="flex justify-center gap-4 p-4">
@@ -261,11 +255,6 @@ export default ({ hasBegunWriting, setHasBegunWriting, isNewPage }) => {
           </Popover.Content>
         </Popover.Portal>
       </Popover.Root>
-      {/* <TimerToast
-        open={toastOpen}
-        setOpen={setToastOpen}
-        message={toastMessage}
-      /> */}
-    </article>
+    </>
   );
 };

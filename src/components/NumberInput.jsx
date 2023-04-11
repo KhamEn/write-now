@@ -4,7 +4,7 @@ import { CaretUp, CaretDown } from "@phosphor-icons/react";
 //   minimumIntegerDigits: 2,
 // });
 
-export default ({ min, max, value, setValue }) => {
+export default ({ min, max, value, setValue, inputSize = "2" }) => {
   function increment() {
     if (value < max) {
       setValue((value) => value + 1);
@@ -56,7 +56,7 @@ export default ({ min, max, value, setValue }) => {
         onChange={handleChange}
         min={min}
         max={max}
-        size={2}
+        size={inputSize}
       />
 
       <button onClick={() => decrement()}>

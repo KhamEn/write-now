@@ -23,6 +23,7 @@ import useGetPostsFromAllTimeQuery from "./hooks/useGetPostsFromAllTimeQuery";
 
 import Timer from "./components/Timer";
 import Toolbar from "./components/Toolbar";
+import WordCounter from "./components/WordCounter";
 
 /*
 first post -> postNumber === 1
@@ -201,24 +202,16 @@ export default () => {
         </div>
       </main>
       <aside className="flex flex-col gap-4">
-        {/* <label className="flex w-fit gap-1" htmlFor="prompt-toggle">
-              <span className="text-sm font-semibold">Prompt</span>
-              <Switch.Root
-                id="prompt-toggle"
-                className="daisy-toggle-success daisy-toggle"
-                defaultChecked
-                onCheckedChange={(checked) => {
-                  setPromptIsEnabled(checked);
-                }}
-              >
-                <Switch.Thumb className="" />
-              </Switch.Root>
-            </label> */}
         <div className="w-fit">
           <Timer
             hasBegunWriting={hasBegunWriting}
             setHasBegunWriting={setHasBegunWriting}
             isNewPage={isNewPage}
+          />
+        </div>
+        <div>
+          <WordCounter
+            wordCount={editor ? editor.storage.characterCount.words() : 0}
           />
         </div>
       </aside>
