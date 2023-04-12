@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 
 import { EditorContent, useEditor } from "@tiptap/react";
 import Document from "@tiptap/extension-document";
@@ -100,6 +100,7 @@ export default () => {
   const scrollCallback = () => {
     mainRef.current.scrollIntoView({ behavior: "smooth", block: "center" });
   };
+
   /*
   The maximum posts that you can fetch, through reddit json api, is 100.
   And of thoses 100, some posts might not be writing prompts, so postNumber should be a few numbers below 100.
@@ -142,21 +143,19 @@ export default () => {
     setIsNewPage(true);
   }
 
-  // function copyUserWritingInMarkdown() {
-  //   const htmlarkdown = new HTMLarkdown();
-  //   const contentInHtml = editor.getHTML();
-  //   const contentInMd = htmlarkdown.convert(contentInHtml);
-  //   navigator.clipboard.writeText(contentInMd);
-  // }
-
-  function downloadUserWriting(anchorElement) {
+  function exportUserWriting() {
     const htmlarkdown = new HTMLarkdown();
     const contentInHtml = editor.getHTML();
     const contentInMd = htmlarkdown.convert(contentInHtml);
+
     const blob = new Blob([contentInMd], { type: "text/markdown" });
     const blobUrl = window.URL.createObjectURL(blob);
+    const fileName = "Prompt- " + prompt.substring(0, 35) + ".md";
+
+    const anchorElement = document.createElement("a");
     anchorElement.setAttribute("href", blobUrl);
-    anchorElement.setAttribute("download", "wrote-it.md");
+    anchorElement.setAttribute("download", fileName);
+    anchorElement.click();
   }
 
   function handleEditorKeyDown() {
@@ -180,7 +179,7 @@ export default () => {
       )}
       <Toolbar
         handleNewPromptClick={changePrompt}
-        handleExportClick={downloadUserWriting}
+        handleExportClick={exportUserWriting}
         setTimerIsEnabled={setTimerIsEnabled}
         setWordCounterIsEnabled={setWordCounterIsEnabled}
       />

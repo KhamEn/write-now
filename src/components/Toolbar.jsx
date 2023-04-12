@@ -16,9 +16,7 @@ export default ({
           Get New Prompt
         </button>
         <button className="rounded-2xl border-2 px-3 py-1 text-dark-base shadow-block-b  hover:bg-dark-normal-AAA ">
-          <a onClick={(event) => handleExportClick(event.target)}>
-            Export Writing
-          </a>
+          <a onClick={handleExportClick}>Export Writing</a>
         </button>
       </div>
       <div className="flex items-center gap-4">
