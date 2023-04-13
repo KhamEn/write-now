@@ -3,8 +3,8 @@
 @tailwind utilities;
 
 @font-face {
-  font-family: "Courier Prime";
-  src: url("../../fonts/Courier_Prime.ttf");
+  font-family: "Bree Serif";
+  src: url("../../fonts/BreeSerif-Regular.ttf");
 }
 
 @font-face {
@@ -32,6 +32,34 @@
   font-family: "IBM Plex Sans";
   src: url("../../fonts/IBMPlexSans-BoldItalic.woff2");
   font-weight: 700;
+  font-style: italic;
+}
+
+@font-face {
+  font-family: "iA Writer DuoS";
+  src: url("../../fonts/iAWriterDuoS-Regular.woff2");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "iA Writer DuoS";
+  src: url("../../fonts/iAWriterDuoS-Italic.woff2");
+  font-weight: normal;
+  font-style: italic;
+}
+
+@font-face {
+  font-family: "iA Writer DuoS";
+  src: url("../../fonts/iAWriterDuoS-Bold.woff2");
+  font-weight: bold;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "iA Writer DuoS";
+  src: url("../../fonts/iAWriterDuoS-BoldItalic.woff2");
+  font-weight: bold;
   font-style: italic;
 }
 
