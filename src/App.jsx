@@ -78,8 +78,8 @@ export default () => {
   const [prompt, setPrompt] = useState("");
   const [sourceUrl, setSourceUrl] = useState("");
 
+  const [wordCounterIsEnabled, setWordCounterIsEnabled] = useState(false);
   const [timerIsEnabled, setTimerIsEnabled] = useState(true);
-  const [wordCounterIsEnabled, setWordCounterIsEnabled] = useState(true);
 
   useEffect(() => {
     if (haveFetchedTodayPrompts) {
@@ -156,12 +156,24 @@ export default () => {
     anchorElement.click();
   }
 
-  function handleEditorKeyDown() {
-    setShowOverlay(true);
+  function handleEditorKeyDown(event) {
+    const keyCode = event.keyCode;
+    if (
+      (keyCode > 47 && keyCode < 58) ||
+      keyCode === 32 ||
+      keyCode === 13 ||
+      keyCode === 8 ||
+      (keyCode > 64 && keyCode < 91) ||
+      (keyCode > 95 && keyCode < 112) ||
+      (keyCode > 185 && keyCode < 193) ||
+      (keyCode > 218 && keyCode < 223)
+    ) {
+      setShowOverlay(true);
 
-    if (!hasBegunWriting) {
-      setHasBegunWriting(true);
-      setIsNewPage(false);
+      if (!hasBegunWriting) {
+        setHasBegunWriting(true);
+        setIsNewPage(false);
+      }
     }
   }
 
