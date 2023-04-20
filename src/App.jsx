@@ -186,9 +186,9 @@ export default () => {
         ></div>
       )}
 
-      <div className="flex h-screen flex-col gap-4 p-4 lg:flex-row">
-        <aside className="mb-4 flex flex-wrap gap-4 lg:flex-col">
-          <div className="">
+      <div className="flex h-screen flex-col gap-4 p-4 lg:flex-row xl:gap-32">
+        <aside className="flex flex-wrap gap-4 lg:flex-col">
+          <div>
             <Toolbar
               handleNewPromptClick={changePrompt}
               handleExportClick={exportUserWriting}
@@ -198,35 +198,35 @@ export default () => {
               setWordCounterIsEnabled={setWordCounterIsEnabled}
             />
           </div>
-          <div className="min-w-[150px] max-w-[250px] flex-1 lg:w-[250px] lg:flex-none">
-            {wordCounterIsEnabled && (
+          {wordCounterIsEnabled && (
+            <div className="min-w-[150px] max-w-[200px] flex-1 lg:w-[200px] lg:flex-none">
               <WordCounter
                 wordCount={editor ? editor.storage.characterCount.words() : 0}
               />
-            )}
-          </div>
-          <div className="min-w-[150px] max-w-[250px] flex-1 lg:w-[250px] lg:flex-none">
-            {timerIsEnabled && (
+            </div>
+          )}
+          {timerIsEnabled && (
+            <div className="min-w-[150px] max-w-[200px] flex-1 lg:w-[200px] lg:flex-none">
               <Timer
                 hasBegunWriting={hasBegunWriting}
                 setHasBegunWriting={setHasBegunWriting}
                 isNewPage={isNewPage}
               />
-            )}
-          </div>
+            </div>
+          )}
         </aside>
 
         <main
-          className="relative z-40 mx-auto flex w-full max-w-[8.5in] flex-grow flex-col gap-8"
+          className="relative z-40 mx-auto flex w-full max-w-[8.5in] flex-grow flex-col gap-8 lg:flex-none xl:fixed xl:left-1/2 xl:h-screen xl:-translate-x-1/2 xl:pb-8"
           onMouseLeave={() => setShowOverlay(false)}
           ref={mainRef}
           onFocus={scrollCallback}
         >
-          <div className=" bg-light-shade">
+          <div className="bg-light-shade">
             <Prompter prompt={prompt} redditThreadUrl={sourceUrl} />
           </div>
 
-          <div className=" relative min-h-[6rem] flex-grow overflow-auto bg-light-base shadow-md shadow-dark-tint">
+          <div className="relative min-h-[6rem] flex-grow overflow-auto bg-light-base shadow-md shadow-dark-tint">
             <EditorContent
               onFocus={() => setShowOverlay(true)}
               onBlur={() => setShowOverlay(false)}

@@ -47,6 +47,7 @@ export default ({ hasBegunWriting, setHasBegunWriting, isNewPage }) => {
   const [remainingTime, setRemainingTime] = useState(
     targetTimeInMilli + MILLISECONDS_CONVERSION_BUFFER
   );
+  const [isDone, setIsDone] = useState(false);
   const callback = useCallback(() => {
     const elapsedTime = timer.getElapsedRunningTime();
 
@@ -55,6 +56,7 @@ export default ({ hasBegunWriting, setHasBegunWriting, isNewPage }) => {
     );
 
     if (elapsedTime > targetTimeInMilli) {
+      setIsDone(true);
       timer.stop();
     }
   }, [targetTimeInMilli]);
@@ -90,7 +92,9 @@ export default ({ hasBegunWriting, setHasBegunWriting, isNewPage }) => {
   }, [hasBegunWriting]);
 
   useEffect(() => {
-    if (timer.isStopped()) {
+    // isDone is required because isStopped() doesn't distinguish between not having started vs being stopped
+    if (timer.isStopped() && isDone) {
+      setIsDone(false);
       setZIndex("z-30");
       const delayer = setTimeout(() => {
         // Put the timer under the overlay.
