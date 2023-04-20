@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 
 import { EditorContent, useEditor } from "@tiptap/react";
 import Document from "@tiptap/extension-document";
@@ -76,11 +76,10 @@ export default () => {
   const { data: allPrompts } = useGetPostsFromAllTimeQuery();
 
   const [prompt, setPrompt] = useState("");
-  const [promptIsEnabled, setPromptIsEnabled] = useState(true);
   const [sourceUrl, setSourceUrl] = useState("");
 
   const [timerIsEnabled, setTimerIsEnabled] = useState(true);
-  const [wordCounterIsEnabled, setWordCounterIsEnabled] = useState(false);
+  const [wordCounterIsEnabled, setWordCounterIsEnabled] = useState(true);
 
   useEffect(() => {
     if (haveFetchedTodayPrompts) {
@@ -100,7 +99,6 @@ export default () => {
   const scrollCallback = () => {
     mainRef.current.scrollIntoView({ behavior: "smooth", block: "center" });
   };
-
   /*
   The maximum posts that you can fetch, through reddit json api, is 100.
   And of thoses 100, some posts might not be writing prompts, so postNumber should be a few numbers below 100.
@@ -161,7 +159,6 @@ export default () => {
   function handleEditorKeyDown() {
     setShowOverlay(true);
 
-    setShowOverlay(true);
     if (!hasBegunWriting) {
       setHasBegunWriting(true);
       setIsNewPage(false);
@@ -169,47 +166,27 @@ export default () => {
   }
 
   return (
-    <div className="mx-auto max-w-screen-xl px-4">
+    <>
       {showOverlay && (
         <div
-          id="whole-screen-overlay"
           className=" fixed top-0 left-0 right-0 bottom-0 z-10 h-full w-full bg-light-shade/[0.90]"
           onMouseMove={() => setShowOverlay(false)}
         ></div>
       )}
-      <Toolbar
-        handleNewPromptClick={changePrompt}
-        handleExportClick={exportUserWriting}
-        setTimerIsEnabled={setTimerIsEnabled}
-        setWordCounterIsEnabled={setWordCounterIsEnabled}
-      />
-      <div className="mx-auto my-16 flex justify-center gap-16 ">
-        <main
-          className="z-20 mx-auto flex max-w-[8.5in] flex-col gap-8"
-          onMouseLeave={() => setShowOverlay(false)}
-          ref={mainRef}
-          onFocus={scrollCallback}
-        >
-          {promptIsEnabled && (
-            <div className=" bg-light-shade">
-              <Prompter prompt={prompt} redditThreadUrl={sourceUrl} />
-            </div>
-          )}
 
-          <div className="rounded-lg shadow-md shadow-dark-tint">
-            <EditorContent
-              onFocus={() => setShowOverlay(true)}
-              onBlur={() => setShowOverlay(false)}
-              onMouseEnter={(event) => {
-                if (document.activeElement === event.currentTarget.firstChild)
-                  setShowOverlay(true);
-              }}
-              onKeyDown={handleEditorKeyDown}
-              editor={editor}
+      <div className="flex h-screen flex-col overflow-auto p-4">
+        <aside className="flex flex-wrap gap-2 xl:fixed xl:top-4 xl:left-4">
+          <div className="">
+            <Toolbar
+              handleNewPromptClick={changePrompt}
+              handleExportClick={exportUserWriting}
+              timerIsEnabled={timerIsEnabled}
+              setTimerIsEnabled={setTimerIsEnabled}
+              wordCounterIsEnabled={wordCounterIsEnabled}
+              setWordCounterIsEnabled={setWordCounterIsEnabled}
             />
           </div>
-        </main>
-        <aside>
+          {/* <div className="right-4 top-4 flex flex-grow flex-wrap justify-evenly gap-2  xl:fixed"> */}
           <div>
             {timerIsEnabled && (
               <Timer
@@ -219,15 +196,41 @@ export default () => {
               />
             )}
           </div>
-          <div className="w-full">
+          <div className="w-fit xl:w-full">
             {wordCounterIsEnabled && (
               <WordCounter
                 wordCount={editor ? editor.storage.characterCount.words() : 0}
               />
             )}
           </div>
+          {/* </div> */}
         </aside>
+
+        <main
+          className="relative z-40 mx-auto flex max-w-[8.5in] flex-grow flex-col gap-8"
+          onMouseLeave={() => setShowOverlay(false)}
+          ref={mainRef}
+          onFocus={scrollCallback}
+        >
+          <div className=" bg-light-shade">
+            <Prompter prompt={prompt} redditThreadUrl={sourceUrl} />
+          </div>
+
+          <div className=" relative min-h-[6rem] flex-grow overflow-auto bg-light-base shadow-md shadow-dark-tint">
+            <EditorContent
+              onFocus={() => setShowOverlay(true)}
+              onBlur={() => setShowOverlay(false)}
+              onMouseEnter={(event) => {
+                if (document.activeElement === event.currentTarget.firstChild)
+                  setShowOverlay(true);
+              }}
+              onKeyDown={handleEditorKeyDown}
+              editor={editor}
+              className="absolute h-full w-full "
+            />
+          </div>
+        </main>
       </div>
-    </div>
+    </>
   );
 };
