@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import * as Popover from "@radix-ui/react-popover";
-import { FloppyDisk, X } from "@phosphor-icons/react";
+import { FloppyDisk, X, GearSix } from "@phosphor-icons/react";
 import NumberInput from "./NumberInput";
 
 const DEFAULT_TARGET_WORD_COUNT = 100;
@@ -37,21 +37,30 @@ export default ({ wordCount }) => {
       <Popover.Root modal={true}>
         <Popover.Anchor>
           <article
-            className={`relative ${zIndex} rounded-md border py-3 px-6 text-dark-tint shadow-md shadow-dark-tint`}
+            className={`relative ${zIndex} rounded-md border py-2 px-4 text-dark-tint shadow-md shadow-dark-tint`}
           >
             <progress
               className="daisy-progress"
               value={wordCount}
               max={targetWordCount}
-            ></progress>
-            <Popover.Trigger asChild>
-              <div className="hover:cursor-pointer">{`${wordCount}/${targetWordCount} words`}</div>
-            </Popover.Trigger>
+            />
+            <div className="my-2 font-bold">{`${wordCount}/${targetWordCount} words`}</div>
+            <section className="h-[38px]">
+              <Popover.Trigger asChild className="float-right">
+                <button>
+                  <GearSix
+                    className="rounded-full py-1"
+                    weight="fill"
+                    size={32}
+                  />
+                </button>
+              </Popover.Trigger>
+            </section>
           </article>
         </Popover.Anchor>
         <Popover.Portal>
           <Popover.Content
-            collisionPadding={10}
+            collisionPadding={16}
             className="relative z-50 rounded-md bg-light-shade shadow-md shadow-dark-base"
           >
             <fieldset className="flex">

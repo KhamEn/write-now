@@ -6,6 +6,7 @@ import {
   ArrowCounterClockwise,
   FloppyDisk,
   X,
+  GearSix,
 } from "@phosphor-icons/react";
 
 import NumberInput from "./NumberInput";
@@ -33,19 +34,16 @@ function printTimeInHumanReadableFormat(milliseconds) {
 }
 
 const DEFAULT_HOURS = 0;
-const DEFAULT_MINUTES = 10;
+const DEFAULT_MINUTES = 5;
 const DEFAULT_SECONDS = 0;
 const DEFAULT_MILLISECONDS =
   DEFAULT_HOURS * 3600000 + DEFAULT_MINUTES * 60000 + DEFAULT_SECONDS * 1000;
 const MILLISECONDS_CONVERSION_BUFFER = 100;
-const FULL_PERCENTAGE_LEFT = 99;
 
 export default ({ hasBegunWriting, setHasBegunWriting, isNewPage }) => {
   // Countdown Timer states begin
   const [targetTimeInMilli, setTargetTimeInMilli] =
     useState(DEFAULT_MILLISECONDS);
-  const [percentageLeft, setTimeLeftPercentage] =
-    useState(FULL_PERCENTAGE_LEFT);
   const [remainingTime, setRemainingTime] = useState(
     targetTimeInMilli + MILLISECONDS_CONVERSION_BUFFER
   );
@@ -54,10 +52,6 @@ export default ({ hasBegunWriting, setHasBegunWriting, isNewPage }) => {
 
     setRemainingTime(
       targetTimeInMilli - elapsedTime + MILLISECONDS_CONVERSION_BUFFER
-    );
-
-    setTimeLeftPercentage(() =>
-      Math.round(100 - (elapsedTime / targetTimeInMilli) * 100)
     );
 
     if (elapsedTime > targetTimeInMilli) {
@@ -126,7 +120,6 @@ export default ({ hasBegunWriting, setHasBegunWriting, isNewPage }) => {
 
   function resetTimer() {
     timer.stop();
-    setTimeLeftPercentage(99);
     setRemainingTime(targetTimeInMilli + MILLISECONDS_CONVERSION_BUFFER);
     setHasBegunWriting(false);
   }
@@ -148,67 +141,75 @@ export default ({ hasBegunWriting, setHasBegunWriting, isNewPage }) => {
       <Popover.Root modal={true}>
         <Popover.Anchor>
           <article
-            className={`relative ${zIndex} mb-4 rounded-md border py-3 px-6 text-dark-tint shadow-md shadow-dark-tint`}
+            className={`relative ${zIndex}rounded-md border py-2 px-4 text-dark-tint shadow-md shadow-dark-tint`}
           >
-            <Popover.Trigger asChild>
-              <section
-                className="daisy-radial-progress mb-2 text-xl font-bold  hover:cursor-pointer"
-                style={{
-                  "--value": `${percentageLeft}`,
-                  "--size": "8rem",
-                  "--thickness": "0.5rem",
-                }}
-              >
+            <progress
+              className="daisy-progress"
+              value={timer.getElapsedRunningTime()}
+              max={targetTimeInMilli}
+            ></progress>
+
+            <section>
+              <p className="my-2 font-bold">
                 {printTimeInHumanReadableFormat(remainingTime)}
+              </p>
+              <section className="">
+                {timer.isRunning() ? (
+                  <>
+                    <button onClick={pauseTimer}>
+                      <Pause
+                        className="mr-1 rounded-full border p-1"
+                        weight="fill"
+                        size={32}
+                      />
+                    </button>
+                    <button onClick={resetTimer}>
+                      <ArrowCounterClockwise
+                        className="rounded-full border p-1"
+                        weight="fill"
+                        size={32}
+                      />
+                    </button>
+                  </>
+                ) : (
+                  <>
+                    <button
+                      onClick={pauseTimer}
+                      disabled
+                      className=" mr-1 text-light-large-AA hover:cursor-default"
+                    >
+                      <Pause
+                        className="rounded-full border p-1"
+                        weight="fill"
+                        size={32}
+                      />
+                    </button>
+                    <button onClick={resetTimer}>
+                      <ArrowCounterClockwise
+                        className="rounded-full border p-1"
+                        weight="fill"
+                        size={32}
+                      />
+                    </button>
+                  </>
+                )}
+                <Popover.Trigger asChild className="float-right">
+                  <button>
+                    <GearSix
+                      className="rounded-full py-1"
+                      weight="fill"
+                      size={32}
+                    />
+                  </button>
+                </Popover.Trigger>
               </section>
-            </Popover.Trigger>
-            <section className="flex justify-center gap-2">
-              {timer.isRunning() ? (
-                <>
-                  <button onClick={pauseTimer}>
-                    <Pause
-                      className="rounded-full border p-1"
-                      weight="fill"
-                      size={32}
-                    />
-                  </button>
-                  <button onClick={resetTimer}>
-                    <ArrowCounterClockwise
-                      className="rounded-full border p-1"
-                      weight="fill"
-                      size={32}
-                    />
-                  </button>
-                </>
-              ) : (
-                <>
-                  <button
-                    onClick={pauseTimer}
-                    disabled
-                    className=" text-light-large-AA hover:cursor-default"
-                  >
-                    <Pause
-                      className="rounded-full border p-1"
-                      weight="fill"
-                      size={32}
-                    />
-                  </button>
-                  <button onClick={resetTimer}>
-                    <ArrowCounterClockwise
-                      className="rounded-full border p-1"
-                      weight="fill"
-                      size={32}
-                    />
-                  </button>
-                </>
-              )}
             </section>
           </article>
         </Popover.Anchor>
 
         <Popover.Portal>
           <Popover.Content
-            collisionPadding={10}
+            collisionPadding={16}
             className="relative z-50 rounded-md bg-light-shade shadow-md shadow-dark-base"
           >
             <fieldset className="flex">
@@ -217,21 +218,18 @@ export default ({ hasBegunWriting, setHasBegunWriting, isNewPage }) => {
                 max={99}
                 min={0}
                 setValue={setNumberInputHours}
-                // handleChange={setNumberInputHours}
               />
               <NumberInput
                 value={numberInputMinutes}
                 max={59}
                 min={0}
                 setValue={setNumberInputMinutes}
-                // handleChange={setNumberInputMinutes}
               />
               <NumberInput
                 value={numberInputSeconds}
                 max={59}
                 min={0}
                 setValue={setNumberInputSeconds}
-                // handleSecondsChange={setNumberInputSeconds}
               />
             </fieldset>
             <div className="flex justify-center gap-4 p-4">

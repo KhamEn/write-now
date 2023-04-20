@@ -169,13 +169,13 @@ export default () => {
     <>
       {showOverlay && (
         <div
-          className=" fixed top-0 left-0 right-0 bottom-0 z-10 h-full w-full bg-light-shade/[0.90]"
+          className=" fixed top-0 left-0 right-0 bottom-0 z-10 h-full w-full bg-light-shade/[0.92]"
           onMouseMove={() => setShowOverlay(false)}
         ></div>
       )}
 
-      <div className="flex h-screen flex-col overflow-auto p-4">
-        <aside className="flex flex-wrap gap-2 xl:fixed xl:top-4 xl:left-4">
+      <div className="flex h-screen flex-col gap-4 p-4 lg:flex-row">
+        <aside className="mb-4 flex flex-wrap gap-4 lg:flex-col">
           <div className="">
             <Toolbar
               handleNewPromptClick={changePrompt}
@@ -186,8 +186,14 @@ export default () => {
               setWordCounterIsEnabled={setWordCounterIsEnabled}
             />
           </div>
-          {/* <div className="right-4 top-4 flex flex-grow flex-wrap justify-evenly gap-2  xl:fixed"> */}
-          <div>
+          <div className="min-w-[150px] max-w-[250px] flex-1 lg:w-[250px] lg:flex-none">
+            {wordCounterIsEnabled && (
+              <WordCounter
+                wordCount={editor ? editor.storage.characterCount.words() : 0}
+              />
+            )}
+          </div>
+          <div className="min-w-[150px] max-w-[250px] flex-1 lg:w-[250px] lg:flex-none">
             {timerIsEnabled && (
               <Timer
                 hasBegunWriting={hasBegunWriting}
@@ -196,18 +202,10 @@ export default () => {
               />
             )}
           </div>
-          <div className="w-fit xl:w-full">
-            {wordCounterIsEnabled && (
-              <WordCounter
-                wordCount={editor ? editor.storage.characterCount.words() : 0}
-              />
-            )}
-          </div>
-          {/* </div> */}
         </aside>
 
         <main
-          className="relative z-40 mx-auto flex max-w-[8.5in] flex-grow flex-col gap-8"
+          className="relative z-40 mx-auto flex w-full max-w-[8.5in] flex-grow flex-col gap-8"
           onMouseLeave={() => setShowOverlay(false)}
           ref={mainRef}
           onFocus={scrollCallback}
