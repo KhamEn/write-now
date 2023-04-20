@@ -77,9 +77,10 @@ export default ({ hasBegunWriting, setHasBegunWriting, isNewPage }) => {
   // Countdown Timer functions begin
   useEffect(() => {
     if (hasBegunWriting) {
-      timer.start();
+      startTimer();
       // Put the timer above the overlay.
       setZIndex("z-30");
+
       const delayer = setTimeout(() => {
         // Put the timer under the overlay.
         setZIndex("");
@@ -141,7 +142,7 @@ export default ({ hasBegunWriting, setHasBegunWriting, isNewPage }) => {
       <Popover.Root modal={true}>
         <Popover.Anchor>
           <article
-            className={`relative ${zIndex}rounded-md border py-2 px-4 text-dark-tint shadow-md shadow-dark-tint`}
+            className={`relative ${zIndex} rounded-md border py-2 px-4 text-dark-tint shadow-md shadow-dark-tint`}
           >
             <progress
               className="daisy-progress"
