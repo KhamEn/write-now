@@ -3,17 +3,11 @@ import * as Popover from "@radix-ui/react-popover";
 import { FloppyDisk, X, GearSix } from "@phosphor-icons/react";
 import NumberInput from "./NumberInput";
 
-const DEFAULT_TARGET_WORD_COUNT = 100;
-
-export default ({ wordCount }) => {
+export default ({ wordCount, targetWordCount, setTargetWordCount }) => {
   // use tailwind class name, not vanilla css
   const [zIndex, setZIndex] = useState("z-0");
-  const [targetWordCount, setTargetWordCount] = useState(
-    DEFAULT_TARGET_WORD_COUNT
-  );
-  const [targetWordCountFromInput, setTargetWordCountFromInput] = useState(
-    DEFAULT_TARGET_WORD_COUNT
-  );
+  const [targetWordCountFromInput, setTargetWordCountFromInput] =
+    useState(targetWordCount);
 
   useEffect(() => {
     if (wordCount > 0 && wordCount < 4) {

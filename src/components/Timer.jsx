@@ -33,17 +33,16 @@ function printTimeInHumanReadableFormat(milliseconds) {
   return h + ":" + m + ":" + s;
 }
 
-const DEFAULT_HOURS = 0;
-const DEFAULT_MINUTES = 5;
-const DEFAULT_SECONDS = 0;
-const DEFAULT_MILLISECONDS =
-  DEFAULT_HOURS * 3600000 + DEFAULT_MINUTES * 60000 + DEFAULT_SECONDS * 1000;
 const MILLISECONDS_CONVERSION_BUFFER = 100;
 
-export default ({ hasBegunWriting, setHasBegunWriting, isNewPage }) => {
+export default ({
+  targetTimeInMilli,
+  setTargetTimeInMilli,
+  hasBegunWriting,
+  setHasBegunWriting,
+  isNewPage,
+}) => {
   // Countdown Timer states begin
-  const [targetTimeInMilli, setTargetTimeInMilli] =
-    useState(DEFAULT_MILLISECONDS);
   const [remainingTime, setRemainingTime] = useState(
     targetTimeInMilli + MILLISECONDS_CONVERSION_BUFFER
   );
@@ -71,9 +70,15 @@ export default ({ hasBegunWriting, setHasBegunWriting, isNewPage }) => {
   const [zIndex, setZIndex] = useState("");
 
   // Edit Timer states begin
-  const [numberInputHours, setNumberInputHours] = useState(DEFAULT_HOURS);
-  const [numberInputMinutes, setNumberInputMinutes] = useState(DEFAULT_MINUTES);
-  const [numberInputSeconds, setNumberInputSeconds] = useState(DEFAULT_SECONDS);
+  const [numberInputHours, setNumberInputHours] = useState(
+    Math.trunc(targetTimeInMilli / 3600000)
+  );
+  const [numberInputMinutes, setNumberInputMinutes] = useState(
+    Math.trunc((targetTimeInMilli % 3600000) / 60000)
+  );
+  const [numberInputSeconds, setNumberInputSeconds] = useState(
+    Math.trunc(((targetTimeInMilli % 3600000) % 60000) / 1000)
+  );
   // Edit Timer states end
 
   // Countdown Timer functions begin

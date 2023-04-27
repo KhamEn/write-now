@@ -46,7 +46,30 @@ function getRandomInt(max) {
   return Math.floor(Math.random() * max);
 }
 
+(() => {
+  const userPrefs = localStorage.getItem("write-it");
+  if (userPrefs === null) {
+    const DEFAULT_HOURS = 0;
+    const DEFAULT_MINUTES = 5;
+    const DEFAULT_SECONDS = 0;
+    const DEFAULT_MILLISECONDS =
+      DEFAULT_HOURS * 3600000 +
+      DEFAULT_MINUTES * 60000 +
+      DEFAULT_SECONDS * 1000;
+
+    const defaultPrefs = {
+      wordCounterIsEnabled: false,
+      targetWordCount: 100,
+      timerIsEnabled: true,
+      targetTimeInMilli: DEFAULT_MILLISECONDS,
+    };
+    localStorage.setItem("write-it", JSON.stringify(defaultPrefs));
+  }
+})();
+
 export default () => {
+  const parsedUserPrefs = JSON.parse(localStorage.getItem("write-it"));
+
   // Editor
   const editor = useEditor({
     editorProps: {
@@ -78,16 +101,19 @@ export default () => {
   const [prompt, setPrompt] = useState("");
   const [sourceUrl, setSourceUrl] = useState("");
 
-  const [wordCounterIsEnabled, setWordCounterIsEnabled] = useState(false);
-  const [timerIsEnabled, setTimerIsEnabled] = useState(true);
+  const [wordCounterIsEnabled, setWordCounterIsEnabled] = useState(
+    parsedUserPrefs.wordCounterIsEnabled
+  );
+  const [targetWordCount, setTargetWordCount] = useState(
+    parsedUserPrefs.targetWordCount
+  );
+  const [timerIsEnabled, setTimerIsEnabled] = useState(
+    parsedUserPrefs.timerIsEnabled
+  );
+  const [targetTimeInMilli, setTargetTimeInMilli] = useState(
+    parsedUserPrefs.targetTimeInMilli
+  );
 
-  useEffect(() => {
-    if (haveFetchedTodayPrompts) {
-      const topPostOfTheDay = getPostFromRedditPosts(todayPrompts, 1);
-      setPrompt(topPostOfTheDay.title);
-      setSourceUrl(topPostOfTheDay.url);
-    }
-  }, [haveFetchedTodayPrompts]);
   // Misc States
   const [showOverlay, setShowOverlay] = useState(false);
 
@@ -99,6 +125,44 @@ export default () => {
   const scrollCallback = () => {
     mainRef.current.scrollIntoView({ behavior: "smooth", block: "center" });
   };
+
+  useEffect(() => {
+    const newUserPrefs = {
+      ...parsedUserPrefs,
+      wordCounterIsEnabled: wordCounterIsEnabled,
+    };
+    localStorage.setItem("write-it", JSON.stringify(newUserPrefs));
+  }, [wordCounterIsEnabled]);
+  useEffect(() => {
+    const newUserPrefs = {
+      ...parsedUserPrefs,
+      targetWordCount: targetWordCount,
+    };
+    localStorage.setItem("write-it", JSON.stringify(newUserPrefs));
+  }, [targetWordCount]);
+  useEffect(() => {
+    const newUserPrefs = {
+      ...parsedUserPrefs,
+      timerIsEnabled: timerIsEnabled,
+    };
+    localStorage.setItem("write-it", JSON.stringify(newUserPrefs));
+  }, [timerIsEnabled]);
+  useEffect(() => {
+    const newUserPrefs = {
+      ...parsedUserPrefs,
+      targetTimeInMilli: targetTimeInMilli,
+    };
+    localStorage.setItem("write-it", JSON.stringify(newUserPrefs));
+  }, [targetTimeInMilli]);
+
+  useEffect(() => {
+    if (haveFetchedTodayPrompts) {
+      const topPostOfTheDay = getPostFromRedditPosts(todayPrompts, 1);
+      setPrompt(topPostOfTheDay.title);
+      setSourceUrl(topPostOfTheDay.url);
+    }
+  }, [haveFetchedTodayPrompts]);
+
   /*
   The maximum posts that you can fetch, through reddit json api, is 100.
   And of thoses 100, some posts might not be writing prompts, so postNumber should be a few numbers below 100.
@@ -202,6 +266,8 @@ export default () => {
             <div className="min-w-[150px] max-w-[200px] flex-1 lg:w-[200px] lg:flex-none">
               <WordCounter
                 wordCount={editor ? editor.storage.characterCount.words() : 0}
+                targetWordCount={targetWordCount}
+                setTargetWordCount={setTargetWordCount}
               />
             </div>
           )}
@@ -211,6 +277,8 @@ export default () => {
                 hasBegunWriting={hasBegunWriting}
                 setHasBegunWriting={setHasBegunWriting}
                 isNewPage={isNewPage}
+                targetTimeInMilli={targetTimeInMilli}
+                setTargetTimeInMilli={setTargetTimeInMilli}
               />
             </div>
           )}
