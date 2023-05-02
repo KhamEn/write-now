@@ -34,7 +34,7 @@ module.exports = {
         "plane-bl": "-9px 9px 0px",
       },
       fontFamily: {
-        mono: ["iA Writer Duo S", ...defaultTheme.fontFamily.mono],
+        mono: ["iA Writer DuoS", ...defaultTheme.fontFamily.mono],
         sans: ["IBM Plex Sans", ...defaultTheme.fontFamily.sans],
         serif: ["Bree Serif", ...defaultTheme.fontFamily.serif],
       },
