@@ -15,9 +15,7 @@
   <br/>
   <img src="./src/assets/big-screen-screenshot.png" alt="homepage screenshot">
 
-The aim of this app is to help you write more.
-
-## Key Features
+</div>
 
 ## Key Features
 
