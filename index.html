@@ -2,10 +2,35 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <!-- <link rel="icon" type="image/svg+xml" href="/vite.svg" /> -->
-    <link rel="icon" type="image/icon" href="./favicon.ico" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Write It</title>
+
+    <!-- favicon -->
+    <link
+      rel="apple-touch-icon"
+      sizes="180x180"
+      href="./assets/apple-touch-icon-58d345d6.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="32x32"
+      href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAMAAABEpIrGAAAABGdBTUEAALGPC/xhBQAAACBjSFJNAAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAB11BMVEUAAADn6u3Y3OLY4ODQ1N1GRkZFRUulp6xGRkpGRkvb29tTU1fO09htb3TN0tdHR0pHR0pGRkpGRkpGRkpJSUlOTk5EREtGRk1GRkpHR0tFRUpGRktGRkpGRktFRUpGRktGRkpHR0lGRklGRkpGRkpGRkpVVVVGRkpISEhKSkpFRUlGRktHR0pHR0dGRkpJSUnm6e3V2eDM0dmeoKMfICGNj5GvsrZOT1Hk5+srKy0/P0FFRkjY2t7KzdARERJWV1l8fX8TExQXFxjg4+bAwsVkZWg5OjzX2t0oKSokJCVJSUpZWly2uLuMjZGWmJxZWl3Ex8obGxyfoaQvMDCDhIbJzM+MjpJnaGvR09diZGVRUVQlJSYXFxkvLzGVl5sgICJiY2TIy86LjJBGRkp8fYCusLTFx8uho6bT1tqtr7Lh5OdISExVVVpdXmJpam6Gi5GUmqJJSUxVVVlgYGV3eoCRl59UVFlTU1hQUFRPT1RTU1dYWFxeXmNUVFhVVVhHR0tMTFBSUldZWV5ZWV1JSU1OTlLi4+d3eHx4eX3h4+e0trrIzNNwcndxc3jIy9KkpqzHy9HIzNK1t7pLS0+BgYSLjZLz9vn19/qLjJFVVlucn6afoqr///8brrIpAAAAMHRSTlMAVeQh9R1VjqWkB7s08DOqidfW8g4NKShFRGBffHuXlrKxzczp6Ab9IB87OlMk5iM4t7euAAAAAWJLR0SccbzCJwAAAAlwSFlzAAAA7AAAAOwBeShxvQAAAAd0SU1FB+cGGQ0gONCaY0AAAAG0SURBVDjLY2AAAkYDDMDEzIAEsCgwZGEmoMAIWQVWBcgqQAqMTUwNzEzMDSwsrQysTWxAihhRFNja2Rs4ODo5u9i5GrjZuWMqMPDwNPDytvPxtfPDocDfLiAwKDjE3y4Uh4Iwu3C7iMgoj2gDHApc7GJiDeJi7LzRFbCysbGDuBbxdgkGiXZ2SXAF7GxsrEAFHMnJKWCvpwalGRikB2UYGGQGZYEEUpKTORkYuLhhCjAAUAE3FwMPb3ZObh4U5BcAQT6Ml5tTyMvHwMBfVAwHJaVAUILg5/AD3SBQVl5RWVVdU4wCaqqrKitq6wRA3hBMBoH6hsYmqKKa5qqGerCgENifwslw0NLQ2trQguALg+RFkvEAUaACMXwKxIEKJECMtvaOzuSuLlQaCCSBCqRAjO6e3r7k/n5UGgikgQpkkpM72qC60OjkZFmgArnk5N4JIF0Te+D0RAidnCwPVKAAdkMH0M5JXch0G0hcEahACZ8blIEKVCAempwyBQmkTIaIqjIwqKlDmFOnTUcC02ZARNXVGDSgQTJz1mwkMGsmVFiTQSsZL9Bm0MGvQIdBVw+fvJ4+AAJ4Nil89yDQAAAAJXRFWHRkYXRlOmNyZWF0ZQAyMDIzLTA2LTI1VDEzOjMyOjU2KzAwOjAwkL+NqgAAACV0RVh0ZGF0ZTptb2RpZnkAMjAyMy0wNi0yNVQxMzozMjo1NiswMDowMOHiNRYAAAAZdEVYdFNvZnR3YXJlAHd3dy5pbmtzY2FwZS5vcmeb7jwaAAAAV3pUWHRSYXcgcHJvZmlsZSB0eXBlIGlwdGMAAHic4/IMCHFWKCjKT8vMSeVSAAMjCy5jCxMjE0uTFAMTIESANMNkAyOzVCDL2NTIxMzEHMQHy4BIoEouAOoXEXTyQjWVAAAAAElFTkSuQmCC"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="16x16"
+      href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAMAAAAoLQ9TAAAABGdBTUEAALGPC/xhBQAAACBjSFJNAAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAA81BMVEUAAADm6e3e4ufX3ONERElHR0q+wMNFRUp5e4JGRklGRkpGRkpJSUlOTk5EREtGRk1GRkpHR0tFRUpGRktGRktFRUlGRktGRkpHR0pGRknm6e3d4ebM0tpiY2SrrbBSU1SIio11d3qYmp4lJSbf4uaUlph4eXtXWFpgYWJCQ0XLztHHyc0oKSp9f4JYWVsuLjDl6Oy8vsOXmZ2EhYdlZmnh5OdKSk59f4SVl5yYmqCcoKdXV1tYWF1bW2BgYGVlZmx5e4JGRkpISExOTlJTU1dVVVqpqq9+gYR9gIOpq6+oqq/T1tqnqq5gYWZzdXlfYGX///9UgWOHAAAAGnRSTlMAqvdtMarjMItNTPIODSkoRURgX3t6lpWQjw0wekcAAAABYktHRFDjbky8AAAACXBIWXMAAAB2AAAAdgFOeyYIAAAAB3RJTUUH5wYZDSA40JpjQAAAALBJREFUGNNVjYcOglAMRetAUdzb5964N8MBFJHh/P+/8QXR6Ena3p6kKQD4iIc/AC5fUakGPFGrN5qtdqdLfJ7o9Qf8cPQjxpPpbE48EWRCZMEvV2uy2ZIQEwZWECVJknc7mQ5RYCGyPxwVRdU0VVGOh30UgEPUT8b5bJx0RA4ghn/EIYFompb9LsQkpNCxbOdTmIYM4nd1ELOQo4eXq8uNxjwUaL8/XJ40FqH0/6X8All6LQGc0hlHAAAAJXRFWHRkYXRlOmNyZWF0ZQAyMDIzLTA2LTI1VDEzOjMyOjU2KzAwOjAwkL+NqgAAACV0RVh0ZGF0ZTptb2RpZnkAMjAyMy0wNi0yNVQxMzozMjo1NiswMDowMOHiNRYAAAAZdEVYdFNvZnR3YXJlAHd3dy5pbmtzY2FwZS5vcmeb7jwaAAAAV3pUWHRSYXcgcHJvZmlsZSB0eXBlIGlwdGMAAHic4/IMCHFWKCjKT8vMSeVSAAMjCy5jCxMjE0uTFAMTIESANMNkAyOzVCDL2NTIxMzEHMQHy4BIoEouAOoXEXTyQjWVAAAAAElFTkSuQmCC"
+    />
+    <link rel="manifest" href="data:application/manifest+json;base64,ewogICAgIm5hbWUiOiAiIiwKICAgICJzaG9ydF9uYW1lIjogIiIsCiAgICAiaWNvbnMiOiBbCiAgICAgICAgewogICAgICAgICAgICAic3JjIjogIi9hbmRyb2lkLWNocm9tZS0xOTJ4MTkyLnBuZyIsCiAgICAgICAgICAgICJzaXplcyI6ICIxOTJ4MTkyIiwKICAgICAgICAgICAgInR5cGUiOiAiaW1hZ2UvcG5nIgogICAgICAgIH0sCiAgICAgICAgewogICAgICAgICAgICAic3JjIjogIi9hbmRyb2lkLWNocm9tZS01MTJ4NTEyLnBuZyIsCiAgICAgICAgICAgICJzaXplcyI6ICI1MTJ4NTEyIiwKICAgICAgICAgICAgInR5cGUiOiAiaW1hZ2UvcG5nIgogICAgICAgIH0KICAgIF0sCiAgICAidGhlbWVfY29sb3IiOiAiI2ZmZmZmZiIsCiAgICAiYmFja2dyb3VuZF9jb2xvciI6ICIjZmZmZmZmIiwKICAgICJkaXNwbGF5IjogInN0YW5kYWxvbmUiCn0K" />
+    <link
+      rel="mask-icon"
+      href="./assets/safari-pinned-tab-4d7e9ba4.svg"
+      color="#111112"
+    />
+    <meta name="msapplication-TileColor" content="#da532c" />
+    <meta name="theme-color" content="#ffffff" />
     <script type="module" crossorigin src="./assets/index-bd0feee1.js"></script>
     <link rel="stylesheet" href="./assets/index-a367f4ff.css">
   </head>
