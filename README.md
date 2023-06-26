@@ -7,7 +7,7 @@
 
   <p style="font-weight:bold">Kickstart your writing practice, with the help of <a href="https://www.reddit.com/r/WritingPrompts/" target="_blank">/r/writingprompt</a>.</p>
 
-![react](https://img.shields.io/badge/React-46464a?style=flat&logo=react&logoColor=FF4154)
+![react](https://img.shields.io/badge/React-46464a?style=flat&logo=react&logoColor=61DAFB)
 ![tailwind css](https://img.shields.io/badge/Tailwind_CSS-46464a?style=flat&logo=tailwind-css&logoColor=#06B6D4)
 ![reddit api](https://img.shields.io/badge/Reddit_API-46464a?style=flat&logo=reddit&logoColor=#FF4500)
 ![react query](https://img.shields.io/badge/React_Query-46464a?style=flat&logo=reactquery&logoColor=FF4154)
