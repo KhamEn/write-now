@@ -1,8 +1,8 @@
 import { useQuery } from "@tanstack/react-query";
 
-async function fetchPostsFromAllTime() {
+async function getAllPrompts() {
   const response = await fetch(
-    "https://www.reddit.com/r/WritingPrompts/top/.json?t=all&limit=100"
+    "https://wi-api-get-prompts.khamcodes.workers.dev/"
   );
 
   if (!response.ok) {
@@ -14,5 +14,8 @@ async function fetchPostsFromAllTime() {
 }
 
 export default () => {
-  return useQuery(["Get top posts from all time"], fetchPostsFromAllTime);
+  return useQuery({
+    queryKey: ["Get all prompts in one from KV"],
+    queryFn: getAllPrompts,
+  });
 };

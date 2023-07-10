@@ -13,38 +13,10 @@ import Prompter from "./components/Prompter";
 
 import { HTMLarkdown } from "htmlarkdown";
 
-import useGetPostsFromTodayQuery from "./hooks/useGetPostsFromTodayQuery";
-import useGetPostsFromThisWeekQuery from "./hooks/useGetPostsFromThisWeekQuery";
-import useGetPostsFromThisMonthQuery from "./hooks/useGetPostsFromThisMonthQuery";
-import useGetPostsFromThisYearQuery from "./hooks/useGetPostsFromThisYearQuery";
-import useGetPostsFromAllTimeQuery from "./hooks/useGetPostsFromAllTimeQuery";
-
 import Timer from "./components/Timer";
 import Toolbar from "./components/Toolbar";
 import WordCounter from "./components/WordCounter";
-
-/*
-first post -> postNumber === 1
-*/
-function getPostFromRedditPosts(posts, postNumber) {
-  for (const post of posts.data.children) {
-    const title = post.data.title;
-    const tag = title.slice(0, 4);
-    if (tag === "[WP]" || tag === "[SP]" || tag === "[EU]" || tag === "[CW]") {
-      postNumber--;
-      if (postNumber < 1) {
-        return { title: title.slice(4), url: post.data.url };
-      }
-    }
-  }
-  console.error("postNumber: " + postNumber);
-  console.error(posts);
-  throw new Error("Can't find a post.");
-}
-
-function getRandomInt(max) {
-  return Math.floor(Math.random() * max);
-}
+import useGetAllPromptsQuery from "./hooks/useGetAllPromptsQuery";
 
 (() => {
   const userPrefs = localStorage.getItem("write-it");
@@ -91,13 +63,8 @@ export default () => {
   });
 
   // Prompts
-  const { data: todayPrompts, isSuccess: haveFetchedTodayPrompts } =
-    useGetPostsFromTodayQuery();
-  const { data: weekPrompts } = useGetPostsFromThisWeekQuery();
-  const { data: monthPrompts } = useGetPostsFromThisMonthQuery();
-  const { data: yearPrompts } = useGetPostsFromThisYearQuery();
-  const { data: allPrompts } = useGetPostsFromAllTimeQuery();
-
+  const { data: allPrompts, isSuccess: haveFetchedAllPrompts } =
+    useGetAllPromptsQuery();
   const [prompt, setPrompt] = useState("");
   const [sourceUrl, setSourceUrl] = useState("");
 
@@ -156,50 +123,27 @@ export default () => {
   }, [targetTimeInMilli]);
 
   useEffect(() => {
-    if (haveFetchedTodayPrompts) {
-      const topPostOfTheDay = getPostFromRedditPosts(todayPrompts, 1);
-      setPrompt(topPostOfTheDay.title);
+    if (haveFetchedAllPrompts) {
+      const topPostOfTheDay = allPrompts[0];
+      setPrompt(topPostOfTheDay.prompt);
       setSourceUrl(topPostOfTheDay.url);
     }
-  }, [haveFetchedTodayPrompts]);
+  }, [haveFetchedAllPrompts]);
 
   /*
   The maximum posts that you can fetch, through reddit json api, is 100.
   And of thoses 100, some posts might not be writing prompts, so postNumber should be a few numbers below 100.
   */
   function changePrompt() {
-    const isFromToday = Math.random() > 0.4;
-
-    if (isFromToday) {
-      const postNumber = Math.floor(Math.random() * 9) + 1;
-      const post = getPostFromRedditPosts(todayPrompts, postNumber);
-      setPrompt(post.title);
-      setSourceUrl(post.url);
-    } else {
-      const timeline = getRandomInt(4);
-
-      if (timeline === 0) {
-        const postNumber = getRandomInt(20);
-        const post = getPostFromRedditPosts(weekPrompts, postNumber);
-        setPrompt(post.title);
-        setSourceUrl(post.url);
-      } else if (timeline === 1) {
-        const postNumber = getRandomInt(40);
-        const post = getPostFromRedditPosts(monthPrompts, postNumber);
-        setPrompt(post.title);
-        setSourceUrl(post.url);
-      } else if (timeline === 2) {
-        const postNumber = getRandomInt(70);
-        const post = getPostFromRedditPosts(yearPrompts, postNumber);
-        setPrompt(post.title);
-        setSourceUrl(post.url);
-      } else {
-        const postNumber = getRandomInt(70);
-        const post = getPostFromRedditPosts(allPrompts, postNumber);
-        setPrompt(post.title);
-        setSourceUrl(post.url);
-      }
+    // The maximum is exclusive and the minimum is inclusive
+    function getRandomInt(min, max) {
+      min = Math.ceil(min);
+      max = Math.floor(max);
+      return Math.floor(Math.random() * (max - min) + min);
     }
+    const promptNumber = getRandomInt(0, allPrompts.length);
+    setPrompt(allPrompts[promptNumber].prompt);
+    setSourceUrl(allPrompts[promptNumber].url);
 
     editor.commands.clearContent();
     setIsNewPage(true);
