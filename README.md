@@ -22,7 +22,6 @@
 - Writing prompts
   - Selected from the top posts of the writing prompt subreddit.
 - Notepad
-  - Your writings can be exported as a markdown file
+  - Your writings can be exportedgit as a markdown file
 - Countdown timer
 - Word counter
-- Zen mode to write without distraction
