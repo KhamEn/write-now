@@ -1,15 +1,8 @@
-import * as Popover from "@radix-ui/react-popover";
-import { useState, useCallback, useEffect } from "react";
+import { ArrowCounterClockwise, GearSix, Pause } from "@phosphor-icons/react";
+import { useCallback, useEffect, useState } from "react";
 import { useTimer } from "react-use-precision-timer";
-import {
-  Pause,
-  ArrowCounterClockwise,
-  FloppyDisk,
-  X,
-  GearSix,
-} from "@phosphor-icons/react";
-
-import NumberInput from "./NumberInput";
+import { usePreferenceStore } from "../hooks/usePreferenceStore";
+import TimeEditor from "./TimeEditor";
 
 function printTimeInHumanReadableFormat(milliseconds) {
   if (milliseconds < 1) {
@@ -35,14 +28,11 @@ function printTimeInHumanReadableFormat(milliseconds) {
 
 const MILLISECONDS_CONVERSION_BUFFER = 100;
 
-export default ({
-  targetTimeInMilli,
-  setTargetTimeInMilli,
-  hasBegunWriting,
-  setHasBegunWriting,
-  isNewPage,
-}) => {
-  // Countdown Timer states begin
+export default ({ hasBegunWriting, setHasBegunWriting, isNewPage }) => {
+  const targetTimeInMilli = usePreferenceStore(
+    (state) => state.targetTimeInMilli
+  );
+
   const [remainingTime, setRemainingTime] = useState(
     targetTimeInMilli + MILLISECONDS_CONVERSION_BUFFER
   );
@@ -65,23 +55,9 @@ export default ({
     () => setRemainingTime(targetTimeInMilli + MILLISECONDS_CONVERSION_BUFFER),
     [targetTimeInMilli]
   );
-  // Countdown Timer states end
 
   const [zIndex, setZIndex] = useState("");
 
-  // Edit Timer states begin
-  const [numberInputHours, setNumberInputHours] = useState(
-    Math.trunc(targetTimeInMilli / 3600000)
-  );
-  const [numberInputMinutes, setNumberInputMinutes] = useState(
-    Math.trunc((targetTimeInMilli % 3600000) / 60000)
-  );
-  const [numberInputSeconds, setNumberInputSeconds] = useState(
-    Math.trunc(((targetTimeInMilli % 3600000) % 60000) / 1000)
-  );
-  // Edit Timer states end
-
-  // Countdown Timer functions begin
   useEffect(() => {
     if (hasBegunWriting) {
       startTimer();
@@ -133,136 +109,52 @@ export default ({
     setRemainingTime(targetTimeInMilli + MILLISECONDS_CONVERSION_BUFFER);
     setHasBegunWriting(false);
   }
-  // Countdown Timer functions end
-
-  // Edit Timer functions begin
-  function handleSaveClick() {
-    setTargetTimeInMilli(
-      numberInputHours * 3600000 +
-        numberInputMinutes * 60000 +
-        numberInputSeconds * 1000
-    );
-    resetTimer();
-  }
-  // Edit Timer functions end
 
   return (
-    <>
-      <Popover.Root modal={true}>
-        <Popover.Anchor>
-          <article
-            className={`relative ${zIndex} rounded-md border py-2 px-4 text-dark-tint shadow-md shadow-dark-tint`}
+    <article
+      className={`relative ${zIndex} rounded-md border py-2 px-4 text-dark-tint shadow-md shadow-dark-tint`}
+    >
+      <progress
+        className="daisy-progress"
+        value={timer.getElapsedRunningTime()}
+        max={targetTimeInMilli}
+      />
+      <p className="my-2 font-bold">
+        {printTimeInHumanReadableFormat(remainingTime)}
+      </p>
+      <section className="flex h-[32px] justify-between">
+        <div>
+          <button
+            onClick={pauseTimer}
+            className="mr-2 text-blue-base disabled:text-light-large-AA disabled:hover:cursor-default"
+            disabled={!timer.isRunning()}
           >
-            <progress
-              className="daisy-progress"
-              value={timer.getElapsedRunningTime()}
-              max={targetTimeInMilli}
-            ></progress>
+            <Pause
+              className="rounded-full border p-1"
+              weight="fill"
+              size={32}
+            />
+          </button>
 
-            <section>
-              <p className="my-2 font-bold">
-                {printTimeInHumanReadableFormat(remainingTime)}
-              </p>
-              <section className="">
-                {timer.isRunning() ? (
-                  <>
-                    <button onClick={pauseTimer}>
-                      <Pause
-                        className="mr-1 rounded-full border p-1"
-                        weight="fill"
-                        size={32}
-                      />
-                    </button>
-                    <button onClick={resetTimer}>
-                      <ArrowCounterClockwise
-                        className="rounded-full border p-1"
-                        weight="fill"
-                        size={32}
-                      />
-                    </button>
-                  </>
-                ) : (
-                  <>
-                    <button
-                      onClick={pauseTimer}
-                      disabled
-                      className=" mr-1 text-light-large-AA hover:cursor-default"
-                    >
-                      <Pause
-                        className="rounded-full border p-1"
-                        weight="fill"
-                        size={32}
-                      />
-                    </button>
-                    <button onClick={resetTimer}>
-                      <ArrowCounterClockwise
-                        className="rounded-full border p-1"
-                        weight="fill"
-                        size={32}
-                      />
-                    </button>
-                  </>
-                )}
-                <Popover.Trigger asChild className="float-right">
-                  <button>
-                    <GearSix
-                      className="rounded-full py-1"
-                      weight="fill"
-                      size={32}
-                    />
-                  </button>
-                </Popover.Trigger>
-              </section>
-            </section>
-          </article>
-        </Popover.Anchor>
-
-        <Popover.Portal>
-          <Popover.Content
-            collisionPadding={16}
-            className="relative z-50 rounded-md bg-light-shade shadow-md shadow-dark-base"
+          <button
+            onClick={resetTimer}
+            className="text-blue-base disabled:text-light-large-AA disabled:hover:cursor-default"
+            disabled={!timer.isRunning()}
           >
-            <fieldset className="flex">
-              <NumberInput
-                value={numberInputHours}
-                max={99}
-                min={0}
-                setValue={setNumberInputHours}
-              />
-              <NumberInput
-                value={numberInputMinutes}
-                max={59}
-                min={0}
-                setValue={setNumberInputMinutes}
-              />
-              <NumberInput
-                value={numberInputSeconds}
-                max={59}
-                min={0}
-                setValue={setNumberInputSeconds}
-              />
-            </fieldset>
-            <div className="flex justify-center gap-4 p-4">
-              <Popover.Close asChild>
-                <button
-                  onClick={handleSaveClick}
-                  className="flex grow justify-center gap-1 rounded-md border border-dark-base bg-dark-base py-1 px-3 text-light-shade"
-                >
-                  <FloppyDisk size={24} />
-                  <span>Save</span>
-                </button>
-              </Popover.Close>
-              <Popover.Close asChild>
-                <button className="flex grow justify-center gap-1 rounded-md border py-1 px-3">
-                  <X size={24} />
-                  <span>Cancel</span>
-                </button>
-              </Popover.Close>
-            </div>
-            <Popover.Arrow width={20} height={10} />
-          </Popover.Content>
-        </Popover.Portal>
-      </Popover.Root>
-    </>
+            <ArrowCounterClockwise
+              className="rounded-full border p-1"
+              weight="fill"
+              size={32}
+            />
+          </button>
+        </div>
+
+        <TimeEditor handleSave={resetTimer}>
+          <button className="">
+            <GearSix className="rounded-full py-1" weight="fill" size={32} />
+          </button>
+        </TimeEditor>
+      </section>
+    </article>
   );
 };

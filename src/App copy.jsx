@@ -210,6 +210,8 @@ export default () => {
             <div className="min-w-[150px] max-w-[200px] flex-1 lg:w-[200px] lg:flex-none">
               <WordCounter
                 wordCount={editor ? editor.storage.characterCount.words() : 0}
+                targetWordCount={targetWordCount}
+                setTargetWordCount={setTargetWordCount}
               />
             </div>
           )}
@@ -219,6 +221,8 @@ export default () => {
                 hasBegunWriting={hasBegunWriting}
                 setHasBegunWriting={setHasBegunWriting}
                 isNewPage={isNewPage}
+                targetTimeInMilli={targetTimeInMilli}
+                setTargetTimeInMilli={setTargetTimeInMilli}
               />
             </div>
           )}
