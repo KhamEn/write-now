@@ -1,7 +1,7 @@
 import { ArrowCounterClockwise, GearSix, Pause } from "@phosphor-icons/react";
 import { useCallback, useEffect, useState } from "react";
 import { useTimer } from "react-use-precision-timer";
-import { usePreferenceStore } from "../hooks/usePreferenceStore";
+import { usePreferenceStore } from "../../hooks/usePreferenceStore";
 import TimeEditor from "./TimeEditor";
 
 function printTimeInHumanReadableFormat(milliseconds) {

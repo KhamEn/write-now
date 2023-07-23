@@ -64,15 +64,16 @@
 }
 
 .ProseMirror {
-    padding: clamp(0.5rem, -0.6364rem + 5.6818vw, 3rem) clamp(1rem, -1.2727rem + 11.3636vw, 6rem);
-    @apply outline-none mx-auto font-mono bg-light-base text-dark-base focus:ring-0 focus-visible:ring-offset-0 h-full w-full
+  padding: clamp(0.5rem, -0.6364rem + 5.6818vw, 3rem)
+    clamp(1rem, -1.2727rem + 11.3636vw, 6rem);
+  @apply mx-auto h-full w-full bg-light-base font-mono text-dark-base outline-none focus:ring-0 focus-visible:ring-offset-0;
 }
 
 @layer base {
   :focus-visible {
-    @apply ring-4 ring-red-base outline-none
+    @apply outline-none ring-4 ring-red-base;
   }
   :hover {
-    @apply ring-0 ring-offset-0 outline-none
+    @apply outline-none ring-0 ring-offset-0;
   }
 }

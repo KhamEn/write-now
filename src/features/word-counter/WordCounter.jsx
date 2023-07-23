@@ -1,6 +1,6 @@
 import { GearSix } from "@phosphor-icons/react";
 import { useEffect, useState } from "react";
-import { usePreferenceStore } from "../hooks/usePreferenceStore";
+import { usePreferenceStore } from "../../hooks/usePreferenceStore";
 import WordCountEditor from "./WordCountEditor";
 
 export default ({ wordCount }) => {

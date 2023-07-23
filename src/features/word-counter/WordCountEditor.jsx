@@ -1,43 +1,26 @@
 import { FloppyDisk, X } from "@phosphor-icons/react";
 import * as Popover from "@radix-ui/react-popover";
 import { useState } from "react";
-import { usePreferenceStore } from "../hooks/usePreferenceStore";
-import NumberInput from "./NumberInput";
+import { usePreferenceStore } from "../../hooks/usePreferenceStore";
+import NumberInput from "../../components/NumberInput";
+import { shallow } from "zustand/shallow";
 
-export default ({ children, handleSave }) => {
-  const targetTimeInMilli = usePreferenceStore(
-    (state) => state.targetTimeInMilli
+export default ({ children }) => {
+  const [targetWordCount, setTargetWordCount] = usePreferenceStore(
+    (state) => [state.targetWordCount, state.setTargetWordCount],
+    shallow
   );
-  const setTargetTimeInMilli = usePreferenceStore(
-    (state) => state.setTargetTime
-  );
-  const [numberInputHours, setNumberInputHours] = useState(
-    Math.trunc(targetTimeInMilli / 3600000)
-  );
-  const [numberInputMinutes, setNumberInputMinutes] = useState(
-    Math.trunc((targetTimeInMilli % 3600000) / 60000)
-  );
-  const [numberInputSeconds, setNumberInputSeconds] = useState(
-    Math.trunc(((targetTimeInMilli % 3600000) % 60000) / 1000)
-  );
+  const [inputValue, setInputValue] = useState(targetWordCount);
 
   function handleSaveClick() {
-    setTargetTimeInMilli(
-      numberInputHours * 3600000 +
-        numberInputMinutes * 60000 +
-        numberInputSeconds * 1000
-    );
-    handleSave();
+    setTargetWordCount(inputValue);
   }
 
   return (
     <Popover.Root modal={true}>
       <Popover.Anchor>
-        <Popover.Trigger asChild className="">
-          {children}
-        </Popover.Trigger>
+        <Popover.Trigger asChild>{children}</Popover.Trigger>
       </Popover.Anchor>
-
       <Popover.Portal>
         <Popover.Content
           collisionPadding={16}
@@ -45,22 +28,11 @@ export default ({ children, handleSave }) => {
         >
           <fieldset className="flex">
             <NumberInput
-              value={numberInputHours}
-              max={99}
+              value={inputValue}
+              setValue={setInputValue}
               min={0}
-              setValue={setNumberInputHours}
-            />
-            <NumberInput
-              value={numberInputMinutes}
-              max={59}
-              min={0}
-              setValue={setNumberInputMinutes}
-            />
-            <NumberInput
-              value={numberInputSeconds}
-              max={59}
-              min={0}
-              setValue={setNumberInputSeconds}
+              max={Infinity}
+              inputSize={10}
             />
           </fieldset>
           <div className="flex justify-center gap-4 p-4">
