@@ -35,7 +35,7 @@ export default ({ onPromptChange }) => {
   }
   return (
     <article className="rounded border border-dark-tint p-4 shadow-plane-bl shadow-dark-tint">
-      <p className="font-serif text-lg font-bold">{prompt}</p>
+      <p className="font-serif text-xl">{prompt}</p>
       <a
         href={redditThreadUrl}
         target="_blank"

@@ -3,35 +3,33 @@
 @tailwind utilities;
 
 @font-face {
-  font-family: "Bree Serif";
-  src: url("../fonts/BreeSerif-Regular.ttf");
-}
-
-@font-face {
-  font-family: "IBM Plex Sans";
-  src: url("../fonts/IBMPlexSans-Regular.woff2");
-  font-weight: 400;
+  src: url("../fonts/Karla-VariableFont_wght.ttf") format("truetype-variations");
+  font-family: "Karla";
+  font-weight: 200 800;
   font-style: normal;
 }
 
 @font-face {
-  font-family: "IBM Plex Sans";
-  src: url("../fonts/IBMPlexSans-Italic.woff2");
-  font-weight: 400;
+  src: url("../fonts/Karla-Italic-VariableFont_wght.ttf")
+    format("truetype-variations");
+  font-family: "Karla";
+  font-weight: 200 800;
   font-style: italic;
 }
 
 @font-face {
-  font-family: "IBM Plex Sans";
-  src: url("../fonts/IBMPlexSans-Bold.woff2");
-  font-weight: 700;
+  src: url("../fonts/Piazzolla-VariableFont_opsz,wght.ttf")
+    format("truetype-variations");
+  font-family: "Piazzolla";
+  font-weight: 100 900;
   font-style: normal;
 }
 
 @font-face {
-  font-family: "IBM Plex Sans";
-  src: url("../fonts/IBMPlexSans-BoldItalic.woff2");
-  font-weight: 700;
+  src: url("../fonts/Piazzolla-Italic-VariableFont_opsz,wght.ttf")
+    format("truetype-variations");
+  font-family: "Piazzolla";
+  font-weight: 100 900;
   font-style: italic;
 }
 

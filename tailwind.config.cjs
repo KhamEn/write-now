@@ -34,9 +34,9 @@ module.exports = {
         "plane-bl": "-9px 9px 0px",
       },
       fontFamily: {
-        mono: ["iA Writer DuoS", ...defaultTheme.fontFamily.mono],
-        sans: ["IBM Plex Sans", ...defaultTheme.fontFamily.sans],
-        serif: ["Bree Serif", ...defaultTheme.fontFamily.serif],
+        mono: ["iA Writer DuoS", ...defaultTheme.fontFamily.serif],
+        sans: ["Karla", ...defaultTheme.fontFamily.sans],
+        serif: ["Piazzolla", ...defaultTheme.fontFamily.mono],
       },
       fontSize: {
         "fluid-base": "clamp(1.00rem, calc(0.89rem + 0.57vw), 1.25rem)",

@@ -51,7 +51,7 @@ export default () => {
   const [isNewPage, setIsNewPage] = useState(false);
 
   const mainRef = useRef(null);
-  const scrollCallback = () => {
+  const scrollToPrompter = () => {
     mainRef.current.scrollIntoView({ behavior: "smooth", block: "center" });
   };
 
@@ -126,7 +126,7 @@ export default () => {
           className="relative z-40 mx-auto flex w-full max-w-[8.5in] flex-grow flex-col gap-8 lg:flex-none xl:fixed xl:left-1/2 xl:h-screen xl:-translate-x-1/2 xl:pb-8"
           onMouseLeave={() => setShowOverlay(false)}
           ref={mainRef}
-          onFocus={scrollCallback}
+          onFocus={scrollToPrompter}
         >
           <div>
             <Prompter onPromptChange={createNewPage} />
