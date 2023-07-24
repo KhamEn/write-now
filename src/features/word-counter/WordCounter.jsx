@@ -2,8 +2,10 @@ import { GearSix } from "@phosphor-icons/react";
 import { useEffect, useState } from "react";
 import { usePreferenceStore } from "../../hooks/usePreferenceStore";
 import WordCountEditor from "./WordCountEditor";
+import { useWriterStore } from "../../hooks/useWriterStore";
 
-export default ({ wordCount }) => {
+export default () => {
+  const wordCount = useWriterStore((state) => state.wordCount);
   const targetWordCount = usePreferenceStore((state) => state.targetWordCount);
   // use tailwind class name, not vanilla css
   const [zIndex, setZIndex] = useState("z-0");
@@ -23,7 +25,7 @@ export default ({ wordCount }) => {
 
   return (
     <article
-      className={`relative ${zIndex} rounded-md border py-2 px-4 text-dark-tint shadow-md shadow-dark-tint`}
+      className={`relative ${zIndex} rounded-3xl border py-2 px-4 text-dark-tint shadow-md shadow-dark-tint`}
     >
       <progress
         className="daisy-progress"

@@ -1,43 +1,11 @@
 import { useRef, useState } from "react";
-
-import Bold from "@tiptap/extension-bold";
-import CharacterCount from "@tiptap/extension-character-count";
-import Document from "@tiptap/extension-document";
-import History from "@tiptap/extension-history";
-import Italic from "@tiptap/extension-italic";
-import Paragraph from "@tiptap/extension-paragraph";
-import Strike from "@tiptap/extension-strike";
-import Text from "@tiptap/extension-text";
-import { EditorContent, useEditor } from "@tiptap/react";
-import Prompter from "./features/writing-prompt/Prompter";
-
-import { HTMLarkdown } from "htmlarkdown";
-import Timer from "./features/timer/Timer";
 import Toolbar from "./features/toolbar/Toolbar";
 import WordCounter from "./features/word-counter/WordCounter";
+import Writer from "./features/writer/Writer";
+import Prompter from "./features/writing-prompt/Prompter";
 import { usePreferenceStore } from "./hooks/usePreferenceStore";
 
 export default () => {
-  // Editor
-  const editor = useEditor({
-    editorProps: {
-      attributes: {
-        spellcheck: "false",
-      },
-    },
-
-    extensions: [
-      Document,
-      Paragraph,
-      Text,
-      Italic,
-      Bold,
-      Strike,
-      CharacterCount,
-      History,
-    ],
-  });
-
   const wordCounterIsEnabled = usePreferenceStore(
     (state) => state.wordCounterIsEnabled
   );
@@ -45,7 +13,6 @@ export default () => {
 
   // UI States
   const [showOverlay, setShowOverlay] = useState(false);
-
   // Timer States
   const [hasBegunWriting, setHasBegunWriting] = useState(false);
   const [isNewPage, setIsNewPage] = useState(false);
@@ -58,15 +25,6 @@ export default () => {
   function createNewPage() {
     editor.commands.clearContent();
     setIsNewPage(true);
-  }
-
-  function getExportInfo() {
-    const htmlarkdown = new HTMLarkdown();
-    const contentInHtml = editor.getHTML();
-    const contentInMd = htmlarkdown.convert(contentInHtml);
-    const fileName = editor.getText().substring(0, 35) + ".md";
-
-    return { contentInMd, fileName };
   }
 
   function handleEditorKeyDown(event) {
@@ -102,22 +60,20 @@ export default () => {
       <div className="flex h-screen flex-col gap-4 p-4 lg:flex-row xl:gap-32">
         <aside className="flex flex-wrap gap-4 lg:flex-col">
           <div>
-            <Toolbar getExportInfo={getExportInfo} />
+            <Toolbar />
           </div>
           {wordCounterIsEnabled && (
             <div className="min-w-[150px] max-w-[200px] flex-1 lg:w-[200px] lg:flex-none">
-              <WordCounter
-                wordCount={editor ? editor.storage.characterCount.words() : 0}
-              />
+              <WordCounter />
             </div>
           )}
           {timerIsEnabled && (
             <div className="min-w-[150px] max-w-[200px] flex-1 lg:w-[200px] lg:flex-none">
-              <Timer
+              {/* <Timer
                 hasBegunWriting={hasBegunWriting}
                 setHasBegunWriting={setHasBegunWriting}
                 isNewPage={isNewPage}
-              />
+              /> */}
             </div>
           )}
         </aside>
@@ -133,7 +89,7 @@ export default () => {
           </div>
 
           <div className="relative min-h-[6rem] flex-grow overflow-auto bg-light-base shadow-md shadow-dark-tint">
-            <EditorContent
+            {/* <EditorContent
               onFocus={() => setShowOverlay(true)}
               onBlur={() => setShowOverlay(false)}
               onMouseEnter={(event) => {
@@ -143,7 +99,8 @@ export default () => {
               onKeyDown={handleEditorKeyDown}
               editor={editor}
               className="absolute h-full w-full "
-            />
+            /> */}
+            <Writer />
           </div>
         </main>
       </div>

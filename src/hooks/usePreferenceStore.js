@@ -8,7 +8,7 @@ const DEFAULT_MILLISECONDS =
   DEFAULT_HOURS * 3600000 + DEFAULT_MINUTES * 60000 + DEFAULT_SECONDS * 1000;
 
 const preferenceStore = (set, get) => ({
-  wordCounterIsEnabled: false,
+  wordCounterIsEnabled: true,
   targetWordCount: 10,
   timerIsEnabled: true,
   targetTimeInMilli: DEFAULT_MILLISECONDS,

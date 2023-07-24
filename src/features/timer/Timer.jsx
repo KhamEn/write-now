@@ -112,7 +112,7 @@ export default ({ hasBegunWriting, setHasBegunWriting, isNewPage }) => {
 
   return (
     <article
-      className={`relative ${zIndex} rounded-md border py-2 px-4 text-dark-tint shadow-md shadow-dark-tint`}
+      className={`relative ${zIndex} rounded-3xl border py-2 px-4 text-dark-tint shadow-md shadow-dark-tint`}
     >
       <progress
         className="daisy-progress"

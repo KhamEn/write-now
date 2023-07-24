@@ -1,10 +1,13 @@
+import { useEffect, useRef } from "react";
+import { HTMLarkdown } from "htmlarkdown";
 import { List } from "@phosphor-icons/react";
 import * as DropdownMenu from "@radix-ui/react-dropdown-menu";
 import * as Switch from "@radix-ui/react-switch";
 import { usePreferenceStore } from "../../hooks/usePreferenceStore";
 import { shallow } from "zustand/shallow";
+import { useWriterStore } from "../../hooks/useWriterStore";
 
-export default ({ getExportInfo }) => {
+export default () => {
   const [wordCounterIsEnabled, toggleWordCounter] = usePreferenceStore(
     (state) => [state.wordCounterIsEnabled, state.toggleWordCounter],
     shallow
@@ -13,9 +16,21 @@ export default ({ getExportInfo }) => {
     (state) => [state.timerIsEnabled, state.toggleTimer],
     shallow
   );
+  const contentRef = useRef(useWriterStore.getState().htmlContent);
+  useEffect(
+    () =>
+      useWriterStore.subscribe(
+        (state) => (contentRef.current = state.htmlContent)
+      ),
+    []
+  );
 
-  function onExportClick() {
-    const { contentInMd, fileName } = getExportInfo();
+  function exportDocument() {
+    const htmlarkdown = new HTMLarkdown();
+    const contentInHtml = contentRef.current;
+    const contentInMd = htmlarkdown.convert(contentInHtml);
+    // const fileName = editor.getText().substring(0, 35) + ".md";
+    const fileName = "prompt-content.md";
     const blob = new Blob([contentInMd], { type: "text/markdown" });
     const blobUrl = window.URL.createObjectURL(blob);
 
@@ -40,7 +55,6 @@ export default ({ getExportInfo }) => {
             onSelect={(event) => {
               event.preventDefault();
               toggleWordCounter();
-              console.log("Called");
             }}
             className="flex justify-between gap-1 rounded-lg p-1 hover:cursor-pointer"
           >
@@ -74,7 +88,7 @@ export default ({ getExportInfo }) => {
           </DropdownMenu.Item>
           <DropdownMenu.Separator className="h-[1px] bg-dark-base" />
           <DropdownMenu.Item
-            onSelect={onExportClick}
+            onSelect={exportDocument}
             className="rounded-lg p-1 hover:cursor-pointer"
           >
             Export Writing
