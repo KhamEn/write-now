@@ -4,6 +4,7 @@ import WordCounter from "./features/word-counter/WordCounter";
 import Writer from "./features/writer/Writer";
 import Prompter from "./features/writing-prompt/Prompter";
 import { usePreferenceStore } from "./hooks/usePreferenceStore";
+import Timer from "./features/timer/Timer";
 
 export default () => {
   const wordCounterIsEnabled = usePreferenceStore(
@@ -69,11 +70,7 @@ export default () => {
           )}
           {timerIsEnabled && (
             <div className="min-w-[150px] max-w-[200px] flex-1 lg:w-[200px] lg:flex-none">
-              {/* <Timer
-                hasBegunWriting={hasBegunWriting}
-                setHasBegunWriting={setHasBegunWriting}
-                isNewPage={isNewPage}
-              /> */}
+              <Timer isNewPage={isNewPage} />
             </div>
           )}
         </aside>

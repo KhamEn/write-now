@@ -3,6 +3,7 @@ import { useCallback, useEffect, useState } from "react";
 import { useTimer } from "react-use-precision-timer";
 import { usePreferenceStore } from "../../hooks/usePreferenceStore";
 import TimeEditor from "./TimeEditor";
+import { useWriterStore } from "../../hooks/useWriterStore";
 
 function printTimeInHumanReadableFormat(milliseconds) {
   if (milliseconds < 1) {
@@ -28,7 +29,11 @@ function printTimeInHumanReadableFormat(milliseconds) {
 
 const MILLISECONDS_CONVERSION_BUFFER = 100;
 
-export default ({ hasBegunWriting, setHasBegunWriting, isNewPage }) => {
+export default ({ isNewPage }) => {
+  const [isWriting, setIsWriting] = useWriterStore((state) => [
+    state.isWriting,
+    state.setIsWriting,
+  ]);
   const targetTimeInMilli = usePreferenceStore(
     (state) => state.targetTimeInMilli
   );
@@ -36,7 +41,7 @@ export default ({ hasBegunWriting, setHasBegunWriting, isNewPage }) => {
   const [remainingTime, setRemainingTime] = useState(
     targetTimeInMilli + MILLISECONDS_CONVERSION_BUFFER
   );
-  const [isDone, setIsDone] = useState(false);
+  const [isCompleted, setIsCompleted] = useState(false);
   const callback = useCallback(() => {
     const elapsedTime = timer.getElapsedRunningTime();
 
@@ -45,7 +50,7 @@ export default ({ hasBegunWriting, setHasBegunWriting, isNewPage }) => {
     );
 
     if (elapsedTime > targetTimeInMilli) {
-      setIsDone(true);
+      setIsCompleted(true);
       timer.stop();
     }
   }, [targetTimeInMilli]);
@@ -59,7 +64,7 @@ export default ({ hasBegunWriting, setHasBegunWriting, isNewPage }) => {
   const [zIndex, setZIndex] = useState("");
 
   useEffect(() => {
-    if (hasBegunWriting) {
+    if (isWriting) {
       startTimer();
       // Put the timer above the overlay.
       setZIndex("z-30");
@@ -70,17 +75,19 @@ export default ({ hasBegunWriting, setHasBegunWriting, isNewPage }) => {
       }, 3000);
       return () => clearTimeout(delayer);
     }
-  }, [hasBegunWriting]);
+  }, [isWriting]);
 
   useEffect(() => {
     // isDone is required because isStopped() doesn't distinguish between not having started vs being stopped
-    if (timer.isStopped() && isDone) {
-      setIsDone(false);
+    if (timer.isStopped() && isCompleted) {
+      setIsCompleted(false);
       setZIndex("z-30");
+      console.log(remainingTime);
       const delayer = setTimeout(() => {
         // Put the timer under the overlay.
         setZIndex("");
       }, 3000);
+
       return () => clearTimeout(delayer);
     }
   }, [timer.isStopped()]);
@@ -101,13 +108,13 @@ export default ({ hasBegunWriting, setHasBegunWriting, isNewPage }) => {
 
   function pauseTimer() {
     timer.pause();
-    setHasBegunWriting(false);
+    setIsWriting(false);
   }
 
   function resetTimer() {
     timer.stop();
     setRemainingTime(targetTimeInMilli + MILLISECONDS_CONVERSION_BUFFER);
-    setHasBegunWriting(false);
+    setIsWriting(false);
   }
 
   return (
@@ -135,11 +142,13 @@ export default ({ hasBegunWriting, setHasBegunWriting, isNewPage }) => {
               size={32}
             />
           </button>
-
           <button
             onClick={resetTimer}
             className="text-blue-base disabled:text-light-large-AA disabled:hover:cursor-default"
-            disabled={!timer.isRunning()}
+            disabled={
+              !timer.isStarted() &&
+              remainingTime > MILLISECONDS_CONVERSION_BUFFER
+            }
           >
             <ArrowCounterClockwise
               className="rounded-full border p-1"

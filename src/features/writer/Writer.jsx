@@ -8,13 +8,22 @@ import Strike from "@tiptap/extension-strike";
 import Text from "@tiptap/extension-text";
 import { Editor, EditorContent } from "@tiptap/react";
 import { useWriterStore } from "../../hooks/useWriterStore";
+import { useEffect, useRef } from "react";
 
 export default () => {
-  const [wordCount, setWordCount] = useWriterStore((state) => [
-    state.wordCount,
-    state.setWordCount,
-  ]);
+  const setIsWriting = useWriterStore((state) => state.setIsWriting);
+  const setWordCount = useWriterStore((state) => state.setWordCount);
   const setHtmlContent = useWriterStore((state) => state.setHtmlContent);
+  const isWritingRef = useRef(useWriterStore.getState().isWriting);
+  const wordCountRef = useRef(useWriterStore.getState().wordCount);
+  useEffect(() => {
+    useWriterStore.subscribe(
+      (state) => (wordCountRef.current = state.wordCount)
+    );
+    useWriterStore.subscribe(
+      (state) => (isWritingRef.current = state.isWriting)
+    );
+  }, []);
 
   const editor = new Editor({
     editorProps: {
@@ -38,10 +47,18 @@ export default () => {
   if (!editor) return null;
 
   editor.on("update", ({ editor }) => {
-    setHtmlContent(editor.getHTML());
     const currentWordCount = editor.storage.characterCount.words();
-    if (currentWordCount !== wordCount) {
+    const previousWordCount = wordCountRef.current;
+    const isWriting = isWritingRef.current;
+
+    setHtmlContent(editor.getHTML());
+
+    if (currentWordCount !== previousWordCount) {
       setWordCount(currentWordCount);
+    }
+
+    if (!isWriting) {
+      setIsWriting(true);
     }
   });
 

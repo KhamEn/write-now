@@ -79,9 +79,6 @@ export default () => {
             <Switch.Root
               className="relative h-[26px] w-[42px] rounded-full border border-dark-base bg-light-base data-[state=checked]:border-blue-base data-[state=checked]:bg-blue-normal-AAA"
               checked={timerIsEnabled}
-              onCheckedChange={(checked) => {
-                toggleTimer();
-              }}
             >
               <Switch.Thumb className="block h-5 w-5 translate-x-[2px] rounded-full bg-dark-tint transition-transform will-change-transform data-[state=checked]:translate-x-[18px] data-[state=checked]:bg-blue-base" />
             </Switch.Root>
