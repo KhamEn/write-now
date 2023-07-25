@@ -43,7 +43,10 @@ export default () => {
 
   return (
     <DropdownMenu.Root>
-      <DropdownMenu.Trigger className="rounded-lg bg-light-base shadow shadow-dark-base">
+      <DropdownMenu.Trigger
+        className="rounded-lg bg-light-base shadow shadow-dark-base"
+        aria-label="Toolbar"
+      >
         <List size={38} className="rounded-lg border p-2" />
       </DropdownMenu.Trigger>
       <DropdownMenu.Portal>

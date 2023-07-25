@@ -35,7 +35,7 @@ export default () => {
       <p className="my-2 font-bold">{`${wordCount}/${targetWordCount} words`}</p>
       <section className="flex h-[32px] justify-end">
         <WordCountEditor>
-          <button>
+          <button aria-label="Change target word count">
             <GearSix className="rounded-full py-1" weight="fill" size={32} />
           </button>
         </WordCountEditor>

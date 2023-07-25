@@ -134,6 +134,7 @@ export default () => {
             onClick={pauseTimer}
             className="mr-2 text-blue-base disabled:text-light-large-AA disabled:hover:cursor-default"
             disabled={!timer.isRunning()}
+            aria-label="Pause timer"
           >
             <Pause
               className="rounded-full border p-1"
@@ -148,6 +149,7 @@ export default () => {
               !timer.isStarted() &&
               remainingTime > MILLISECONDS_CONVERSION_BUFFER
             }
+            aria-label="Reset timer"
           >
             <ArrowCounterClockwise
               className="rounded-full border p-1"
@@ -158,7 +160,7 @@ export default () => {
         </div>
 
         <TimeEditor handleSave={resetTimer}>
-          <button className="">
+          <button aria-label="Change target time">
             <GearSix className="rounded-full py-1" weight="fill" size={32} />
           </button>
         </TimeEditor>
