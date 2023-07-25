@@ -4,6 +4,7 @@ import { useTimer } from "react-use-precision-timer";
 import { usePreferenceStore } from "../../hooks/usePreferenceStore";
 import TimeEditor from "./TimeEditor";
 import { useWriterStore } from "../../hooks/useWriterStore";
+import { shallow } from "zustand/shallow";
 
 function printTimeInHumanReadableFormat(milliseconds) {
   if (milliseconds < 1) {
@@ -31,14 +32,14 @@ const MILLISECONDS_CONVERSION_BUFFER = 100;
 
 export default () => {
   const prompt = useWriterStore((state) => state.prompt); // Implement observer pattern
-  const [isWriting, setIsWriting] = useWriterStore((state) => [
-    state.isWriting,
-    state.setIsWriting,
-  ]);
+  const [isWriting, setIsWriting] = useWriterStore(
+    (state) => [state.isWriting, state.setIsWriting],
+    shallow
+  );
   const targetTimeInMilli = usePreferenceStore(
     (state) => state.targetTimeInMilli
   );
-  const [zIndex, setZIndex] = useState("");
+  const [tailwindZIndex, setTailwindZIndex] = useState("");
   const [remainingTime, setRemainingTime] = useState(
     targetTimeInMilli + MILLISECONDS_CONVERSION_BUFFER
   );
@@ -66,13 +67,15 @@ export default () => {
     if (isWriting) {
       startTimer();
       // Put the timer above the overlay.
-      setZIndex("z-30");
+      setTailwindZIndex("z-30");
 
       const delayer = setTimeout(() => {
         // Put the timer under the overlay.
-        setZIndex("");
+        setTailwindZIndex("");
       }, 3000);
       return () => clearTimeout(delayer);
+    } else {
+      pauseTimer();
     }
   }, [isWriting]);
 
@@ -80,10 +83,10 @@ export default () => {
     // isCompleted is required because isStopped() doesn't distinguish between not having started vs being stopped
     if (timer.isStopped() && isCompleted) {
       setIsCompleted(false);
-      setZIndex("z-30");
+      setTailwindZIndex("z-30");
       const delayer = setTimeout(() => {
         // Put the timer under the overlay.
-        setZIndex("");
+        setTailwindZIndex("");
       }, 3000);
 
       return () => clearTimeout(delayer);
@@ -115,7 +118,7 @@ export default () => {
 
   return (
     <article
-      className={`relative ${zIndex} rounded-3xl border py-2 px-4 text-dark-tint shadow-md shadow-dark-tint`}
+      className={`relative ${tailwindZIndex} rounded-3xl border py-2 px-4 text-dark-tint shadow-md shadow-dark-tint`}
     >
       <progress
         className="daisy-progress"
