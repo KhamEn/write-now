@@ -7,10 +7,33 @@ import Paragraph from "@tiptap/extension-paragraph";
 import Strike from "@tiptap/extension-strike";
 import Text from "@tiptap/extension-text";
 import { Editor, EditorContent } from "@tiptap/react";
+import { useEffect, useRef, useState } from "react";
 import { useWriterStore } from "../../hooks/useWriterStore";
-import { useEffect, useRef } from "react";
 
 export default () => {
+  const [editor] = useState(
+    new Editor({
+      editorProps: {
+        attributes: {
+          spellcheck: "false",
+        },
+      },
+
+      extensions: [
+        Document,
+        Paragraph,
+        Text,
+        Italic,
+        Bold,
+        Strike,
+        CharacterCount.configure(),
+        History,
+      ],
+    })
+  );
+  if (!editor) return null;
+
+  const prompt = useWriterStore((state) => state.prompt); // Observer pattern
   const setIsWriting = useWriterStore((state) => state.setIsWriting);
   const setWordCount = useWriterStore((state) => state.setWordCount);
   const setHtmlContent = useWriterStore((state) => state.setHtmlContent);
@@ -25,26 +48,10 @@ export default () => {
     );
   }, []);
 
-  const editor = new Editor({
-    editorProps: {
-      attributes: {
-        spellcheck: "false",
-      },
-    },
-
-    extensions: [
-      Document,
-      Paragraph,
-      Text,
-      Italic,
-      Bold,
-      Strike,
-      CharacterCount.configure(),
-      History,
-    ],
-  });
-
-  if (!editor) return null;
+  useEffect(() => {
+    editor.commands.clearContent(false);
+    setWordCount(0);
+  }, [prompt]);
 
   editor.on("update", ({ editor }) => {
     const currentWordCount = editor.storage.characterCount.words();

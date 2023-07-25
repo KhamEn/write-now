@@ -14,19 +14,11 @@ export default () => {
 
   // UI States
   const [showOverlay, setShowOverlay] = useState(false);
-  // Timer States
-  const [hasBegunWriting, setHasBegunWriting] = useState(false);
-  const [isNewPage, setIsNewPage] = useState(false);
 
   const mainRef = useRef(null);
   const scrollToPrompter = () => {
     mainRef.current.scrollIntoView({ behavior: "smooth", block: "center" });
   };
-
-  function createNewPage() {
-    editor.commands.clearContent();
-    setIsNewPage(true);
-  }
 
   function handleEditorKeyDown(event) {
     const keyCode = event.keyCode;
@@ -41,11 +33,6 @@ export default () => {
       (keyCode > 218 && keyCode < 223)
     ) {
       setShowOverlay(true);
-
-      if (!hasBegunWriting) {
-        setHasBegunWriting(true);
-        setIsNewPage(false);
-      }
     }
   }
 
@@ -70,7 +57,7 @@ export default () => {
           )}
           {timerIsEnabled && (
             <div className="min-w-[150px] max-w-[200px] flex-1 lg:w-[200px] lg:flex-none">
-              <Timer isNewPage={isNewPage} />
+              <Timer />
             </div>
           )}
         </aside>
@@ -82,7 +69,7 @@ export default () => {
           onFocus={scrollToPrompter}
         >
           <div>
-            <Prompter onPromptChange={createNewPage} />
+            <Prompter />
           </div>
 
           <div className="relative min-h-[6rem] flex-grow overflow-auto bg-light-base shadow-md shadow-dark-tint">

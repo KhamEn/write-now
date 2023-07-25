@@ -29,7 +29,8 @@ function printTimeInHumanReadableFormat(milliseconds) {
 
 const MILLISECONDS_CONVERSION_BUFFER = 100;
 
-export default ({ isNewPage }) => {
+export default () => {
+  const prompt = useWriterStore((state) => state.prompt); // Implement observer pattern
   const [isWriting, setIsWriting] = useWriterStore((state) => [
     state.isWriting,
     state.setIsWriting,
@@ -37,7 +38,7 @@ export default ({ isNewPage }) => {
   const targetTimeInMilli = usePreferenceStore(
     (state) => state.targetTimeInMilli
   );
-
+  const [zIndex, setZIndex] = useState("");
   const [remainingTime, setRemainingTime] = useState(
     targetTimeInMilli + MILLISECONDS_CONVERSION_BUFFER
   );
@@ -61,8 +62,6 @@ export default ({ isNewPage }) => {
     [targetTimeInMilli]
   );
 
-  const [zIndex, setZIndex] = useState("");
-
   useEffect(() => {
     if (isWriting) {
       startTimer();
@@ -78,11 +77,10 @@ export default ({ isNewPage }) => {
   }, [isWriting]);
 
   useEffect(() => {
-    // isDone is required because isStopped() doesn't distinguish between not having started vs being stopped
+    // isCompleted is required because isStopped() doesn't distinguish between not having started vs being stopped
     if (timer.isStopped() && isCompleted) {
       setIsCompleted(false);
       setZIndex("z-30");
-      console.log(remainingTime);
       const delayer = setTimeout(() => {
         // Put the timer under the overlay.
         setZIndex("");
@@ -93,10 +91,8 @@ export default ({ isNewPage }) => {
   }, [timer.isStopped()]);
 
   useEffect(() => {
-    if (isNewPage) {
-      resetTimer();
-    }
-  }, [isNewPage]);
+    resetTimer();
+  }, [prompt]);
 
   function startTimer() {
     if (timer.isPaused()) {

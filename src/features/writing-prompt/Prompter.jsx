@@ -1,5 +1,7 @@
 import { useEffect, useState } from "react";
 import useGetAllPromptsQuery from "./useGetAllPromptsQuery";
+import { useWriterStore } from "../../hooks/useWriterStore";
+import { shallow } from "zustand/shallow";
 
 // The maximum is exclusive and the minimum is inclusive
 function getRandomInt(min, max) {
@@ -8,10 +10,13 @@ function getRandomInt(min, max) {
   return Math.floor(Math.random() * (max - min) + min);
 }
 
-export default ({ onPromptChange }) => {
+export default () => {
   const { data: allPrompts, isSuccess: haveFetchedAllPrompts } =
     useGetAllPromptsQuery();
-  const [prompt, setPrompt] = useState("");
+  const [prompt, setPrompt] = useWriterStore(
+    (state) => [state.prompt, state.setPrompt],
+    shallow
+  );
   const [redditThreadUrl, setSourceUrl] = useState("");
 
   useEffect(() => {
@@ -26,13 +31,12 @@ export default ({ onPromptChange }) => {
   The maximum posts that you can fetch, through reddit json api, is 100.
   And of thoses 100, some posts might not be writing prompts, so postNumber should be a few numbers below 100.
   */
-  function handleChangePromptClick() {
+  function changePrompt() {
     const promptNumber = getRandomInt(0, allPrompts.length);
-    setPrompt(allPrompts[promptNumber].prompt);
     setSourceUrl(allPrompts[promptNumber].url);
-
-    onPromptChange();
+    setPrompt(allPrompts[promptNumber].prompt);
   }
+
   return (
     <article className="rounded border border-dark-tint p-4 shadow-plane-bl shadow-dark-tint">
       <p className="font-serif text-xl">{prompt}</p>
@@ -44,7 +48,7 @@ export default ({ onPromptChange }) => {
         reddit thread
       </a>{" "}
       <button
-        onClick={handleChangePromptClick}
+        onClick={changePrompt}
         className="text-blue-shade mt-4 block w-fit rounded-full border px-2 text-sm underline"
       >
         change prompt
