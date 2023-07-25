@@ -52,7 +52,7 @@ export default () => {
           </a>
           <button
             onClick={changePrompt}
-            className="text-blue-shade w-fit rounded border px-2 text-blue-base hover:border-blue-base hover:bg-blue-base hover:text-light-base"
+            className="text-blue-shade w-fit rounded border px-2 text-blue-base hover:border-blue-base hover:bg-blue-normal-AAA"
           >
             Change Prompt
           </button>
