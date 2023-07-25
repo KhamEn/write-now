@@ -48,7 +48,7 @@ export default () => {
       </DropdownMenu.Trigger>
       <DropdownMenu.Portal>
         <DropdownMenu.Content
-          className="relative z-50 flex flex-col gap-3 rounded-lg border bg-light-base p-3 shadow-md shadow-dark-base ring-0"
+          className="relative z-50 flex flex-col gap-3 rounded-lg bg-dark-base p-6 text-light-base opacity-95 shadow-md shadow-dark-base ring-0"
           collisionPadding={16}
         >
           <DropdownMenu.Arrow />
@@ -84,7 +84,7 @@ export default () => {
               <Switch.Thumb className="block h-5 w-5 translate-x-[2px] rounded-full bg-dark-tint transition-transform will-change-transform data-[state=checked]:translate-x-[18px] data-[state=checked]:bg-blue-base" />
             </Switch.Root>
           </DropdownMenu.Item>
-          <DropdownMenu.Separator className="h-[1px] bg-dark-base" />
+          <DropdownMenu.Separator className="h-[1px] bg-light-normal-AA" />
           <DropdownMenu.Item
             onSelect={exportDocument}
             className="rounded-lg p-1 hover:cursor-pointer"
