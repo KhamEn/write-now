@@ -19,9 +19,11 @@
 
 ## Key Features
 
-- Writing prompts
+- Prompts
   - Selected from the top posts of the writing prompt subreddit.
-- Notepad
-  - Your writings can be exportedgit as a markdown file
+- Writer
+  - Your writings can be exported as a markdown file
 - Countdown timer
 - Word counter
+- Auto non-distraction mode
+  - Everything, aside from prompt and writer, is dimmed automatically when you write

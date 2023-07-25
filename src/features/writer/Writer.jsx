@@ -69,10 +69,20 @@ export default () => {
     }
   });
 
+  function handleNonWritingActivity() {
+    const isWriting = isWritingRef.current;
+
+    if (isWriting) {
+      setIsWriting(false);
+    }
+  }
+
   return (
     <EditorContent
       editor={editor}
       className="absolute h-full w-full overflow-hidden"
+      onMouseLeave={handleNonWritingActivity}
+      onBlur={handleNonWritingActivity}
     />
   );
 };
