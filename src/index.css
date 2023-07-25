@@ -18,19 +18,10 @@
 }
 
 @font-face {
-  src: url("../fonts/Piazzolla-VariableFont_opsz,wght.ttf")
-    format("truetype-variations");
-  font-family: "Piazzolla";
-  font-weight: 100 900;
+  font-family: "Faune Text";
+  src: url("../fonts/FauneText-regular.ttf");
+  font-weight: normal;
   font-style: normal;
-}
-
-@font-face {
-  src: url("../fonts/Piazzolla-Italic-VariableFont_opsz,wght.ttf")
-    format("truetype-variations");
-  font-family: "Piazzolla";
-  font-weight: 100 900;
-  font-style: italic;
 }
 
 @font-face {
@@ -61,10 +52,9 @@
   font-style: italic;
 }
 
+/* The only way to style Prose Mirror*/
 .ProseMirror {
-  padding: clamp(0.5rem, -0.6364rem + 5.6818vw, 3rem)
-    clamp(1rem, -1.2727rem + 11.3636vw, 6rem);
-  @apply mx-auto h-full w-full bg-light-base font-mono text-dark-base outline-none focus:ring-0 focus-visible:ring-offset-0;
+  @apply mx-auto h-full w-full bg-light-base py-letter-fluid-vertical-padding px-letter-fluid-horizontal-padding font-mono text-dark-base outline-none focus:ring-0 focus-visible:ring-offset-0;
 }
 
 @layer base {

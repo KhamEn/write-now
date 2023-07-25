@@ -38,8 +38,8 @@ export default () => {
   }
 
   return (
-    <article className="rounded border border-dark-tint p-4 shadow-plane-bl shadow-dark-tint">
-      <p className="font-serif text-xl">{prompt}</p>
+    <article className="mx-auto rounded border border-dark-tint p-8 shadow-plane-bl shadow-dark-tint">
+      <p className="font-['Faune_Text'] text-xl">{prompt}</p>
       <a
         href={redditThreadUrl}
         target="_blank"
