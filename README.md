@@ -17,7 +17,7 @@
 
 </div>
 
-## Key Features
+## Features
 
 - Prompts
   - Selected from the top posts of the writing prompt subreddit.

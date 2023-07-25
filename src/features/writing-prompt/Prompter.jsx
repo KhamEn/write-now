@@ -17,6 +17,7 @@ export default () => {
     (state) => [state.prompt, state.setPrompt],
     shallow
   );
+  const isWriting = useWriterStore((state) => state.isWriting);
   const [redditThreadUrl, setSourceUrl] = useState("");
 
   useEffect(() => {
@@ -38,21 +39,25 @@ export default () => {
   }
 
   return (
-    <article className="mx-auto rounded border border-dark-tint p-8 shadow-plane-bl shadow-dark-tint">
+    <article className="mx-auto rounded-md  border-dark-tint bg-light-base px-8 py-6 shadow-md shadow-dark-base">
       <p className="font-['Faune_Text'] text-xl">{prompt}</p>
-      <a
-        href={redditThreadUrl}
-        target="_blank"
-        className="text-blue-shade mt-4 block w-fit rounded-full border px-2 text-sm underline"
-      >
-        reddit thread
-      </a>{" "}
-      <button
-        onClick={changePrompt}
-        className="text-blue-shade mt-4 block w-fit rounded-full border px-2 text-sm underline"
-      >
-        change prompt
-      </button>
+      {!isWriting && (
+        <div className="mt-8 flex justify-between">
+          <a
+            href={redditThreadUrl}
+            target="_blank"
+            className="w-fit px-2 underline"
+          >
+            reddit thread
+          </a>
+          <button
+            onClick={changePrompt}
+            className="text-blue-shade w-fit rounded border px-2 text-blue-base hover:border-blue-base hover:bg-blue-base hover:text-light-base"
+          >
+            Change Prompt
+          </button>
+        </div>
+      )}
     </article>
   );
 };

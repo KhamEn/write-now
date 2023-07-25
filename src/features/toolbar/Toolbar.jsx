@@ -43,12 +43,12 @@ export default () => {
 
   return (
     <DropdownMenu.Root>
-      <DropdownMenu.Trigger className="rounded-lg">
+      <DropdownMenu.Trigger className="rounded-lg bg-light-base shadow shadow-dark-base">
         <List size={38} className="rounded-lg border p-2" />
       </DropdownMenu.Trigger>
       <DropdownMenu.Portal>
         <DropdownMenu.Content
-          className="relative z-50 flex flex-col gap-3 rounded-lg border bg-light-shade p-3 shadow-md shadow-dark-base ring-0"
+          className="relative z-50 flex flex-col gap-3 rounded-lg border bg-light-base p-3 shadow-md shadow-dark-base ring-0"
           collisionPadding={16}
         >
           <DropdownMenu.Arrow />

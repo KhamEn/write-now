@@ -118,7 +118,7 @@ export default () => {
 
   return (
     <article
-      className={`relative ${tailwindZIndex} rounded-3xl border py-2 px-4 text-dark-tint shadow-md shadow-dark-tint`}
+      className={`relative ${tailwindZIndex} rounded-3xl bg-light-base py-2 px-4 text-dark-tint shadow shadow-dark-base`}
     >
       <progress
         className="daisy-progress"

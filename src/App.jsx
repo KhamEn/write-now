@@ -23,7 +23,7 @@ export default () => {
   return (
     <>
       {isWriting && <Overlay />}
-      <div className="flex h-screen flex-col gap-4 p-4 lg:flex-row xl:gap-32">
+      <div className="flex h-screen flex-col gap-4 bg-light-shade p-4 lg:flex-row xl:gap-32">
         <aside className="flex flex-wrap gap-4 lg:flex-col">
           <div>
             <Toolbar />
@@ -49,7 +49,7 @@ export default () => {
             <Prompter />
           </div>
 
-          <div className="relative min-h-[6rem] flex-grow overflow-auto bg-light-base shadow-md shadow-dark-tint">
+          <div className="relative min-h-[6rem] flex-grow overflow-auto rounded-md bg-light-base shadow-md shadow-dark-base">
             <Writer />
           </div>
         </main>
