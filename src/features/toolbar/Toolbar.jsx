@@ -17,20 +17,21 @@ export default () => {
     shallow
   );
   const contentRef = useRef(useWriterStore.getState().htmlContent);
-  useEffect(
-    () =>
-      useWriterStore.subscribe(
-        (state) => (contentRef.current = state.htmlContent)
-      ),
-    []
-  );
+  const promptRef = useRef(useWriterStore.getState().prompt);
+  useEffect(() => {
+    useWriterStore.subscribe(
+      (state) => (contentRef.current = state.htmlContent)
+    );
+    useWriterStore.subscribe((state) => (promptRef.current = state.prompt));
+  }, []);
 
   function exportDocument() {
     const htmlarkdown = new HTMLarkdown();
     const contentInHtml = contentRef.current;
     const contentInMd = htmlarkdown.convert(contentInHtml);
-    // const fileName = editor.getText().substring(0, 35) + ".md";
-    const fileName = "prompt-content.md";
+
+    const prompt = promptRef.current;
+    const fileName = prompt.substring(1, 35) + ".md";
     const blob = new Blob([contentInMd], { type: "text/markdown" });
     const blobUrl = window.URL.createObjectURL(blob);
 
