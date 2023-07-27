@@ -4,7 +4,7 @@ import { CaretUp, CaretDown } from "@phosphor-icons/react";
 //   minimumIntegerDigits: 2,
 // });
 
-export default ({ min, max, value, setValue, inputSize = "2" }) => {
+export default ({ min, max, value, setValue, inputSize = 2 }) => {
   function increment() {
     if (value < max) {
       setValue((value) => value + 1);
@@ -45,12 +45,15 @@ export default ({ min, max, value, setValue, inputSize = "2" }) => {
   }
 
   return (
-    <div className="daisy-stat place-items-center">
-      <button onClick={() => increment()}>
+    <div className="mx-auto flex flex-col items-center">
+      <button
+        onClick={() => increment()}
+        className="rounded-full border border-dark-large-AA"
+      >
         <CaretUp size={32} />
       </button>
       <input
-        className="AAA daisy-stat-value my-2 rounded-full bg-light-base text-center"
+        className=" my-2 rounded-full bg-light-base text-center text-3xl font-bold"
         value={value}
         onKeyDown={handleKeyDown}
         onChange={handleChange}
@@ -59,7 +62,10 @@ export default ({ min, max, value, setValue, inputSize = "2" }) => {
         size={inputSize}
       />
 
-      <button onClick={() => decrement()}>
+      <button
+        onClick={() => decrement()}
+        className="rounded-full border border-dark-large-AA"
+      >
         <CaretDown size={32} />
       </button>
     </div>

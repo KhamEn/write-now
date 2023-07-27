@@ -71,4 +71,14 @@
   :hover {
     @apply outline-none ring-0 ring-offset-0;
   }
+
+  progress {
+    @apply rounded-full bg-light-shade;
+  }
+  progress::-webkit-progress-bar {
+    @apply rounded-full bg-light-shade;
+  }
+  progress::-webkit-progress-value {
+    @apply rounded-full bg-green-base;
+  }
 }

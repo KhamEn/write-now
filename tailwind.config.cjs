@@ -11,13 +11,14 @@ module.exports = {
       },
       blue: {
         base: "#003a70",
-        "normal-AAA": "#9ed0ff",
+        "AAA-normal": "#9ed0ff",
       },
+      green: { base: "#3d5806", "AAA-normal": "#cfff70" },
       light: {
         shade: "#cccccf",
         base: "#fAf9f6",
         "large-AA": "#909097",
-        "normal-AA": "#717178",
+        "normal-AA": "#909097",
         "normal-AAA": "#4e4e53",
       },
       dark: {
@@ -57,24 +58,5 @@ module.exports = {
       ringOffsetWidth: ["focus-visible"],
       ringOffsetColor: ["focus-visible"],
     },
-  },
-
-  plugins: [require("daisyui")],
-  daisyui: {
-    styled: true,
-    themes: [
-      {
-        light: {
-          ...require("daisyui/src/colors/themes")["[data-theme=light]"],
-          success: "#003a70",
-        },
-      },
-    ],
-    base: false,
-    utils: true,
-    logs: true,
-    rtl: false,
-    prefix: "daisy-",
-    darkTheme: "dark",
   },
 };

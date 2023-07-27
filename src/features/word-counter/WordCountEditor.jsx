@@ -25,7 +25,7 @@ export default ({ children }) => {
       <Popover.Portal>
         <Popover.Content
           collisionPadding={16}
-          className="relative z-50 rounded-md bg-light-shade shadow-md shadow-dark-base"
+          className="relative z-50 flex  flex-col gap-8 rounded-md bg-light-shade p-4 shadow-md shadow-dark-base"
         >
           <fieldset className="flex">
             <NumberInput
@@ -36,7 +36,7 @@ export default ({ children }) => {
               inputSize={10}
             />
           </fieldset>
-          <div className="flex justify-center gap-4 p-4">
+          <div className="flex justify-center gap-4">
             <Popover.Close asChild>
               <button
                 onClick={handleSaveClick}

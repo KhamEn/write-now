@@ -25,7 +25,6 @@
     "@tiptap/extension-text": "^2.0.0-beta.220",
     "@tiptap/pm": "^2.0.0-beta.220",
     "@tiptap/react": "^2.0.0-beta.220",
-    "daisyui": "^2.51.5",
     "htmlarkdown": "^1.0.2",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",

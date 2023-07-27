@@ -40,21 +40,23 @@ export default ({ children, handleSave }) => {
       <Popover.Portal>
         <Popover.Content
           collisionPadding={16}
-          className="relative z-50 rounded-md bg-light-shade shadow-md shadow-dark-base"
+          className="relative z-50 flex flex-col gap-8 rounded-md bg-light-shade p-4 shadow-md shadow-dark-base"
         >
-          <fieldset className="flex">
+          <fieldset className="flex items-center gap-4">
             <NumberInput
               value={numberInputHours}
               max={99}
               min={0}
               setValue={setNumberInputHours}
             />
+            <div className="font-3xl font-bold">:</div>
             <NumberInput
               value={numberInputMinutes}
               max={59}
               min={0}
               setValue={setNumberInputMinutes}
             />
+            <div className="font-3xl font-bold">:</div>
             <NumberInput
               value={numberInputSeconds}
               max={59}
@@ -62,7 +64,7 @@ export default ({ children, handleSave }) => {
               setValue={setNumberInputSeconds}
             />
           </fieldset>
-          <div className="flex justify-center gap-4 p-4">
+          <div className="flex justify-center gap-4">
             <Popover.Close asChild>
               <button
                 onClick={handleSaveClick}
