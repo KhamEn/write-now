@@ -66,10 +66,10 @@ export default () => {
               Word Counter
             </DropdownMenu.Label>
             <Switch.Root
-              className="relative h-[26px] w-[42px] rounded-full border border-dark-base bg-light-base data-[state=checked]:border-blue-base data-[state=checked]:bg-blue-normal-AAA"
+              className="relative h-[26px] w-[42px] rounded-full border border-dark-base bg-light-base data-[state=checked]:border-green-base data-[state=checked]:bg-green-AAA-normal"
               checked={wordCounterIsEnabled}
             >
-              <Switch.Thumb className="block h-5 w-5 translate-x-[2px] rounded-full bg-dark-tint transition-transform will-change-transform data-[state=checked]:translate-x-[18px] data-[state=checked]:bg-blue-base" />
+              <Switch.Thumb className="block h-5 w-5 translate-x-[2px] rounded-full bg-dark-tint transition-transform will-change-transform data-[state=checked]:translate-x-[18px] data-[state=checked]:bg-green-base" />
             </Switch.Root>
           </DropdownMenu.Item>
           <DropdownMenu.Item
@@ -81,10 +81,10 @@ export default () => {
           >
             <DropdownMenu.Label>Timer</DropdownMenu.Label>
             <Switch.Root
-              className="relative h-[26px] w-[42px] rounded-full border border-dark-base bg-light-base data-[state=checked]:border-blue-base data-[state=checked]:bg-blue-normal-AAA"
+              className="relative h-[26px] w-[42px] rounded-full border border-dark-base bg-light-base data-[state=checked]:border-green-base data-[state=checked]:bg-green-AAA-normal"
               checked={timerIsEnabled}
             >
-              <Switch.Thumb className="block h-5 w-5 translate-x-[2px] rounded-full bg-dark-tint transition-transform will-change-transform data-[state=checked]:translate-x-[18px] data-[state=checked]:bg-blue-base" />
+              <Switch.Thumb className="block h-5 w-5 translate-x-[2px] rounded-full bg-dark-tint transition-transform will-change-transform data-[state=checked]:translate-x-[18px] data-[state=checked]:bg-green-base" />
             </Switch.Root>
           </DropdownMenu.Item>
           <DropdownMenu.Separator className="h-[1px] bg-light-normal-AA" />
