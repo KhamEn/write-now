@@ -12,7 +12,6 @@ export default ({ children }) => {
   );
   const [inputValue, setInputValue] = useState(parseInt(targetWordCount));
 
-  console.log();
   function handleSaveClick() {
     setTargetWordCount(inputValue);
   }

@@ -7,7 +7,7 @@ import { CaretUp, CaretDown } from "@phosphor-icons/react";
 export default ({ min, max, value, setValue, inputSize = 2 }) => {
   function increment() {
     if (value < max) {
-      setValue((value) => value + 1);
+      setValue((value) => parseInt(value) + 1);
     } else {
       setValue(min);
     }
@@ -15,7 +15,7 @@ export default ({ min, max, value, setValue, inputSize = 2 }) => {
 
   function decrement() {
     if (value > min) {
-      setValue((value) => value - 1);
+      setValue((value) => parseInt(value) - 1);
     } else {
       setValue(max);
     }
