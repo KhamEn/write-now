@@ -40,7 +40,7 @@ export default () => {
 
   return (
     <article className="mx-auto rounded-md  border-dark-tint bg-light-base px-8 py-6 shadow-md shadow-dark-base">
-      <p className="font-['Faune_Text'] text-xl">{prompt}</p>
+      <p className="text-xl font-semibold">{prompt}</p>
       {!isWriting && (
         <div className="mt-8 flex justify-between">
           <a
@@ -52,7 +52,7 @@ export default () => {
           </a>
           <button
             onClick={changePrompt}
-            className="text-blue-shade w-fit rounded border px-2 text-blue-base hover:border-blue-base hover:bg-blue-normal-AAA"
+            className="text-blue-shade hover:bg-blue-normal-AAA w-fit rounded border px-2 text-blue-base hover:border-blue-base"
           >
             Change Prompt
           </button>

@@ -20,14 +20,6 @@
 }
 
 @font-face {
-  font-family: "Faune Text";
-  src: url("../fonts/FauneText-regular.ttf");
-  font-weight: normal;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
   font-family: "iA Writer DuoS";
   src: url("../fonts/iAWriterDuoS-Regular.woff2");
   font-weight: normal;
