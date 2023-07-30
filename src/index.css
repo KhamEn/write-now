@@ -73,11 +73,18 @@
   }
 
   progress {
-    @apply rounded-full bg-light-shade;
+    @apply h-4 overflow-hidden rounded-full border-green-base bg-light-shade;
   }
+
   progress::-webkit-progress-bar {
-    @apply rounded-full bg-light-shade;
+    @apply h-4 overflow-hidden rounded-full border-green-base bg-light-shade;
   }
+
+  /* -moz-progress-bar is how you select the value element in firefox */
+  progress::-moz-progress-bar {
+    @apply rounded-full bg-green-base;
+  }
+
   progress::-webkit-progress-value {
     @apply rounded-full bg-green-base;
   }
