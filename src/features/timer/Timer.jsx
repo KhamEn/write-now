@@ -81,7 +81,6 @@ export default () => {
 
   useEffect(() => {
     // isCompleted is required because isStopped() doesn't distinguish between not having started vs being stopped
-    console.log(timer.getElapsedRunningTime());
 
     if (timer.isStopped() && isCompleted) {
       setTailwindZIndex("z-30");
@@ -89,7 +88,7 @@ export default () => {
         // Put the timer under the overlay.
         setTailwindZIndex("");
       }, 3000);
-      console.log(timer.getElapsedRunningTime());
+
       return () => clearTimeout(delayer);
     }
   }, [timer.isStopped()]);
