@@ -81,14 +81,15 @@ export default () => {
 
   useEffect(() => {
     // isCompleted is required because isStopped() doesn't distinguish between not having started vs being stopped
+    console.log(timer.getElapsedRunningTime());
+
     if (timer.isStopped() && isCompleted) {
-      setIsCompleted(false);
       setTailwindZIndex("z-30");
       const delayer = setTimeout(() => {
         // Put the timer under the overlay.
         setTailwindZIndex("");
       }, 3000);
-
+      console.log(timer.getElapsedRunningTime());
       return () => clearTimeout(delayer);
     }
   }, [timer.isStopped()]);
@@ -102,6 +103,7 @@ export default () => {
       timer.resume();
     } else {
       timer.start();
+      setIsCompleted(false);
     }
   }
 
@@ -113,7 +115,17 @@ export default () => {
   function resetTimer() {
     timer.stop();
     setRemainingTime(targetTimeInMilli + MILLISECONDS_CONVERSION_BUFFER);
+    setIsCompleted(false);
     setIsWriting(false);
+  }
+
+  function getProgressValue() {
+    let value = timer.getElapsedRunningTime();
+    if (value < 1 && isCompleted) {
+      value = targetTimeInMilli;
+    }
+
+    return value;
   }
 
   return (
@@ -121,7 +133,7 @@ export default () => {
       className={`relative ${tailwindZIndex} rounded-3xl bg-light-base py-2 px-4 text-dark-tint shadow shadow-dark-base`}
     >
       <progress
-        value={timer.getElapsedRunningTime()}
+        value={getProgressValue()}
         max={targetTimeInMilli}
         className="w-full"
       >
