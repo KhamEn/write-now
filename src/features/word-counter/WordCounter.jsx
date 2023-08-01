@@ -27,7 +27,7 @@ export default () => {
     <article
       className={`relative ${zIndex} rounded-3xl bg-light-base py-2 px-4 text-dark-tint shadow shadow-dark-base`}
     >
-      <progress value={wordCount} max={targetWordCount}>
+      <progress value={wordCount} max={targetWordCount} className="w-full">
         word count progress
       </progress>
 

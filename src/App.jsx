@@ -23,25 +23,25 @@ export default () => {
   return (
     <>
       {isWriting && <Overlay />}
-      <div className="flex h-screen flex-col gap-4 bg-light-shade p-4 lg:flex-row xl:gap-32">
-        <aside className="flex flex-wrap gap-4 lg:flex-col">
+      <div className="flex h-screen flex-col flex-wrap gap-4 bg-dark-tint p-4 xl:flex-row xl:gap-32">
+        <aside className=" mx-auto hidden w-full max-w-[8.5in]  gap-4 sm:flex xl:mx-0 xl:flex-col">
           <div>
             <Toolbar />
           </div>
           {wordCounterIsEnabled && (
-            <div className="min-w-[150px] max-w-[200px] flex-1 lg:w-[200px] lg:flex-none">
+            <div className="min-w-[140px] sm:w-[200px]">
               <WordCounter />
             </div>
           )}
           {timerIsEnabled && (
-            <div className="min-w-[150px] max-w-[200px] flex-1 lg:w-[200px] lg:flex-none">
+            <div className="min-w-[140px] sm:w-[200px]">
               <Timer />
             </div>
           )}
         </aside>
 
         <main
-          className="relative z-40 mx-auto flex w-full max-w-[8.5in] flex-grow flex-col gap-8 lg:flex-none xl:fixed xl:left-1/2 xl:h-screen xl:-translate-x-1/2 xl:pb-8"
+          className="relative z-40 mx-auto flex w-full max-w-[8.5in] flex-grow flex-col gap-8 xl:fixed xl:left-1/2 xl:h-screen xl:-translate-x-1/2 xl:pb-8"
           ref={mainRef}
           onFocus={scrollToPrompter}
         >

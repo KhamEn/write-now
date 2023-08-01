@@ -120,7 +120,11 @@ export default () => {
     <article
       className={`relative ${tailwindZIndex} rounded-3xl bg-light-base py-2 px-4 text-dark-tint shadow shadow-dark-base`}
     >
-      <progress value={timer.getElapsedRunningTime()} max={targetTimeInMilli}>
+      <progress
+        value={timer.getElapsedRunningTime()}
+        max={targetTimeInMilli}
+        className="w-full"
+      >
         timer progress
       </progress>
       <p className="my-2 font-bold">
